@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STARLINK — 投资备忘卡 / 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --accent-warm: #a83d20;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+  --good: #4a6b45;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Fraunces', Georgia, serif;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138, 106, 31, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 120%, rgba(168, 61, 32, 0.04), transparent 60%);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.dossier {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
+}
+
+/* paper grain */
+.dossier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.dossier > * { position: relative; z-index: 2; }
+
+/* ============ HEADER ============ */
+.head {
+  padding: 32px 48px 24px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.head-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-align: right;
+  line-height: 1.8;
+  white-space: nowrap;
+}
+
+.head-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ============ SECTIONS ============ */
+section {
+  padding: 36px 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .cn { color: var(--ink); }
+.section-title .en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* ============ FINANCIALS TABLE ============ */
+.fin-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  border: 1px solid var(--rule);
+}
+
+.fin-grid > div {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.fin-grid > div:nth-child(4n) { border-right: none; }
+.fin-grid > div:nth-last-child(-n+4) { border-bottom: none; }
+
+.fin-head {
+  background: rgba(138, 106, 31, 0.06);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.fin-label { color: var(--ink-muted); font-size: 12px; }
+.fin-num { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fin-num.hi { color: var(--accent); font-weight: 700; }
+.fin-num.good { color: var(--good); }
+
+/* ============ KPI MOSAIC ============ */
+.kpi-mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 20px;
+}
+
+.kpi {
+  background: var(--surface);
+  padding: 20px;
+  position: relative;
+}
+
+.kpi-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-value .unit {
+  font-size: 14px;
+  color: var(--ink-muted);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.kpi-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+
+.kpi.warning .kpi-value { color: var(--bad); }
+.kpi.flag .kpi-value { color: var(--accent); }
+
+/* ============ ARPU TIMELINE ============ */
+.arpu-line {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: rgba(168, 61, 32, 0.05);
+  border-left: 2px solid var(--accent-warm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.arpu-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arpu-yr { font-size: 10px; color: var(--ink-dim); }
+.arpu-val { font-size: 16px; color: var(--ink); font-weight: 700; margin-top: 2px; }
+
+.arpu-arrow { color: var(--accent-warm); font-size: 14px; }
+
+/* ============ INVESTMENT POINTS ============ */
+.points {
+  display: grid;
+  gap: 18px;
+  counter-reset: pt;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: pt;
+}
+
+.point:first-child { border-top: none; padding-top: 0; }
+
+.point::before {
+  content: counter(pt, decimal-leading-zero);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+.point-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.point-body {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.point-body code,
+.point-body .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(138, 106, 31, 0.1);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.point-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============ GAPS BOX ============ */
+.gaps {
+  background: rgba(168, 61, 32, 0.05);
+  border: 1px solid rgba(168, 61, 32, 0.2);
+  padding: 24px 28px;
+}
+
+.gaps-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bad);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gaps-title::before {
+  content: "✕";
+  font-size: 14px;
+}
+
+.gaps ul {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.gaps li {
+  font-size: 13px;
+  color: var(--ink-muted);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.gaps li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--bad);
+}
+
+.gaps li strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  padding: 24px 48px;
+  background: rgba(138, 106, 31, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+}
+
+.footer .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .head, section, .footer { padding-left: 24px; padding-right: 24px; }
+  .head { grid-template-columns: 1fr; }
+  .head-meta { text-align: left; }
+  .fin-grid { grid-template-columns: 1.4fr 1fr; font-size: 11px; }
+  .fin-grid > div:nth-child(4n) { border-right: 1px solid var(--rule); }
+  .fin-grid > div { border-right: 1px solid var(--rule); }
+  .kpi-mosaic { grid-template-columns: 1fr 1fr; }
+  .arpu-line { font-size: 10px; }
+  .point { grid-template-columns: 40px 1fr; gap: 14px; }
+  .point::before { font-size: 28px; }
+  .footer { flex-direction: column; gap: 8px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<article class="dossier">
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">Investment Memory Card · No. 01</div>
+      <h1 class="title">Starlink<em> / 卫星宽带</em></h1>
+    </div>
+    <div class="head-meta">
+      <strong>SpaceX S-1</strong><br>
+      Filed · May 20, 2026<br>
+      Card v1 · Orthogonal Labs
+    </div>
+  </header>
+
+  <!-- ============ FINANCIALS ============ -->
+  <section>
+    <div class="section-num">§ 01</div>
+    <h2 class="section-title">
+      <span class="cn">核心财务</span>
+      <span class="en">Core Financials</span>
+    </h2>
+
+    <div class="fin-grid">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">2025 FY</div>
+      <div class="fin-head">Q1 2026</div>
+      <div class="fin-head">备注</div>
+
+      <div class="fin-label">Revenue</div>
+      <div class="fin-num hi">$11.4B</div>
+      <div class="fin-num hi">$3.26B</div>
+      <div class="fin-num good">+50% YoY · 加速</div>
+
+      <div class="fin-label">Operating Income</div>
+      <div class="fin-num">$4.42B</div>
+      <div class="fin-num">$1.19B</div>
+      <div class="fin-num good">+120% YoY</div>
+
+      <div class="fin-label">Adj. EBITDA</div>
+      <div class="fin-num">$7.17B</div>
+      <div class="fin-num">$2.09B</div>
+      <div class="fin-num good">+86% YoY</div>
+
+      <div class="fin-label">EBITDA Margin</div>
+      <div class="fin-num hi">63%</div>
+      <div class="fin-num hi">64%</div>
+      <div class="fin-num good">持续提升</div>
+
+      <div class="fin-label">Capex</div>
+      <div class="fin-num">$4.18B</div>
+      <div class="fin-num">$1.33B</div>
+      <div class="fin-num">重投入期</div>
+    </div>
+  </section>
+
+  <!-- ============ OPERATING METRICS ============ -->
+  <section>
+    <div class="section-num">§ 02</div>
+    <h2 class="section-title">
+      <span class="cn">业务指标</span>
+      <span class="en">Operating Metrics</span>
+    </h2>
+
+    <div class="kpi-mosaic">
+      <div class="kpi">
+        <div class="kpi-label">Subscribers · Q1 2026</div>
+        <div class="kpi-value">10.3<span class="unit">M</span></div>
+        <div class="kpi-sub">164 国 · 2021→2026 翻 1000 倍</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">在轨卫星</div>
+        <div class="kpi-value">~9,600</div>
+        <div class="kpi-sub">占全球活跃卫星 65%</div>
+      </div>
+      <div class="kpi warning">
+        <div class="kpi-label">ARPU · 月</div>
+        <div class="kpi-value">$66</div>
+        <div class="kpi-sub">从 2023 年 $99 → 降 33%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Consumer Recurring</div>
+        <div class="kpi-value">~85<span class="unit">%</span></div>
+        <div class="kpi-sub">类 SaaS 收入结构</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Terminal 日产能</div>
+        <div class="kpi-value">20K<span class="unit">+</span></div>
+        <div class="kpi-sub">>500 万颗 ST 芯片/日</div>
+      </div>
+      <div class="kpi flag">
+        <div class="kpi-label">Starshield · 2026E</div>
+        <div class="kpi-value">$3.2<span class="unit">B</span></div>
+        <div class="kpi-sub">政府收入快速上升</div>
+      </div>
+    </div>
+
+    <div class="arpu-line">
+      <span style="color: var(--ink-muted); font-size: 10px; letter-spacing: 0.15em;">ARPU 走势 →</span>
+      <div class="arpu-point"><span class="arpu-yr">2023</span><span class="arpu-val">$99</span></div>
+      <span class="arpu-arrow">↘</span>
+      <div class="arpu-point"><span class="arpu-yr">2024</span><span class="arpu-val">$82</span></div>
+      <span class="arpu-arrow">↘</span>
+      <div class="arpu-point"><span class="arpu-yr">2025</span><span class="arpu-val">$81</span></div>
+      <span class="arpu-arrow">↘</span>
+      <div class="arpu-point" style="color: var(--accent-warm);"><span class="arpu-yr">Q1'26</span><span class="arpu-val" style="color: var(--accent-warm);">$66</span></div>
+    </div>
+  </section>
+
+  <!-- ============ REVENUE MIX ============ -->
+  <section>
+    <div class="section-num">§ 03</div>
+    <h2 class="section-title">
+      <span class="cn">收入结构</span>
+      <span class="en">Revenue Mix · 2025</span>
+    </h2>
+
+    <div class="fin-grid" style="grid-template-columns: 1.2fr 1fr 1.8fr;">
+      <div class="fin-head">细分</div>
+      <div class="fin-head">规模</div>
+      <div class="fin-head">特征</div>
+
+      <div class="fin-label">Consumer</div>
+      <div class="fin-num">~$8B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">量大 · ARPU 低 · 增速放缓</div>
+
+      <div class="fin-label">Enterprise</div>
+      <div class="fin-num">$1.38B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">B2B · 高 ARPU · 上量快</div>
+
+      <div class="fin-label">Maritime</div>
+      <div class="fin-num">~$1.2B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">$34K/年/船 · 75K 船</div>
+
+      <div class="fin-label">Aviation</div>
+      <div class="fin-num">+68% YoY</div>
+      <div class="fin-label" style="color: var(--ink-muted);">$300K/年/机</div>
+
+      <div class="fin-label">Starshield · 政府</div>
+      <div class="fin-num hi">~$3.2B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">战略不可替代 · 集中度上升</div>
+    </div>
+  </section>
+
+  <!-- ============ INVESTMENT POINTS ============ -->
+  <section>
+    <div class="section-num">§ 04</div>
+    <h2 class="section-title">
+      <span class="cn">投资跟踪要点</span>
+      <span class="en">5 Things to Track</span>
+    </h2>
+
+    <div class="points">
+      <div class="point">
+        <div>
+          <div class="point-title">ARPU 的下滑能不能止住</div>
+          <div class="point-body">
+            <code>$99 → $66</code> 是<strong>结构性问题</strong>不是周期性,国际化 + D2C 批发是稀释源。如果 ARPU 跌破 <code>$60</code>,Starlink 的 SaaS 估值逻辑会被重定价。
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">Starship V3 商业化进度</div>
+          <div class="point-body">
+            Starlink V3 卫星(1Tbps/颗)必须靠 Starship 部署,Falcon 9 已接近发射能力极限。<strong>Starship 延迟 = V3 部署延迟 = 服务质量提升放缓 = ARPU 继续被 Kuiper、Guowang 压制。</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">D2C 真实贡献:看净留存 ARPU 而不是 MAU</div>
+          <div class="point-body">
+            25M MAU 目标,但要分给 MNO 约 50%,且<strong>客户关系归 MNO</strong>。MNO 可随时换供应商(Kuiper、AST SpaceMobile)。<span class="mono">真实贡献 ≠ 用户数</span>。
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">政府 / Starshield 收入占比</div>
+          <div class="point-body">
+            快速上升至 <code>~20%</code>(2026E),margin 高 + stickiness 强,但<strong>客户集中度风险也在上升</strong>。跟踪 NSSL Phase 3、Golden Dome、NRO 合同节奏。
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">供应链 Alpha:STMicroelectronics</div>
+          <div class="point-body">
+            <code>NYSE: STM</code> · <strong>唯一干净的 Starlink concept 标的</strong>。10 年 co-design + PLP 工艺锁定,SpaceX 年贡献 <code>$8–12B</code>,占 ST 总营收 <code>5–9%</code>。V3 起量 + D2C 放量均受益。IPO 前后可能 sympathy rally。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DISCLOSURE GAPS ============ -->
+  <section>
+    <div class="section-num">§ 05</div>
+    <h2 class="section-title">
+      <span class="cn">信息空白</span>
+      <span class="en">Undisclosed but Material</span>
+    </h2>
+
+    <div class="gaps">
+      <div class="gaps-title">S-1 没披露 · 但很关键</div>
+      <ul>
+        <li><strong>Churn 率</strong> — 很可能不好看,所以没披露</li>
+        <li><strong>Falcon 9 内部转移定价</strong> — 影响 Starlink 真实 ROIC 的最大变量</li>
+        <li><strong>Connectivity segment 的独立资产负债表和现金流量表</strong> — 只给了 segment P&L 切片</li>
+        <li><strong>Starlink 员工人数</strong> — 避免给未来分拆上市留口风</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>STARLINK <span class="dot"></span> CARD 01 OF SPACEX SERIES</div>
+    <div>NEXT: SPACE / xAI / SOTP</div>
+  </footer>
+
+</article>
+
+</body>
+</html>

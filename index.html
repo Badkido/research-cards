@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Cards — Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --rule: #d9d2c2;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+body {
+  padding: 64px 24px;
+  background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138,106,31,0.06), transparent 60%);
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* header */
+.site-header {
+  margin-bottom: 56px;
+}
+
+.brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.brand::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.site-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.site-title em {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.site-desc {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  max-width: 480px;
+}
+
+/* series block */
+.series {
+  margin-bottom: 48px;
+}
+
+.series-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.series-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* card list */
+.card-list {
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.card-item {
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 18px 24px;
+  gap: 16px;
+}
+
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.005em;
+}
+
+.card-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.12em;
+  margin-top: 4px;
+}
+
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.badge.done {
+  background: rgba(74, 107, 69, 0.12);
+  color: #4a6b45;
+  border: 1px solid rgba(74,107,69,0.25);
+}
+
+.badge.pending {
+  background: rgba(143,137,125,0.1);
+  color: var(--ink-dim);
+  border: 1px solid var(--rule);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: contents;
+}
+
+.card-item.is-live {
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.card-item.is-live:hover {
+  background: rgba(138,106,31,0.04);
+}
+
+/* footer */
+.site-footer {
+  margin-top: 72px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="site-header">
+    <div class="brand">Orthogonal Labs · Research Cards</div>
+    <h1 class="site-title">Research<em> Cards</em></h1>
+    <p class="site-desc">高密度投资备忘卡归档。每张卡片覆盖核心财务、业务指标、跟踪要点与信息空白。</p>
+  </header>
+
+  <div class="series">
+    <div class="series-label">Series 01</div>
+    <div class="series-name">SpaceX</div>
+
+    <ul class="card-list">
+
+      <li class="card-item is-live">
+        <a class="card-link" href="spacex/starlink.html">
+          <div>
+            <div class="card-title">Starlink</div>
+            <div class="card-sub">卫星宽带 · Card 01 · SpaceX S-1 · May 2026</div>
+          </div>
+          <span class="badge done">完成</span>
+        </a>
+      </li>
+
+      <li class="card-item">
+        <div>
+          <div class="card-title">Space / 发射业务</div>
+          <div class="card-sub">Card 02 · 待更新</div>
+        </div>
+        <span class="badge pending">待更新</span>
+      </li>
+
+      <li class="card-item">
+        <div>
+          <div class="card-title">xAI</div>
+          <div class="card-sub">Card 03 · 待更新</div>
+        </div>
+        <span class="badge pending">待更新</span>
+      </li>
+
+      <li class="card-item">
+        <div>
+          <div class="card-title">SOTP 估值拆解</div>
+          <div class="card-sub">Card 04 · 待更新</div>
+        </div>
+        <span class="badge pending">待更新</span>
+      </li>
+
+    </ul>
+  </div>
+
+  <footer class="site-footer">
+    <span>Orthogonal Labs</span>
+    <span>不构成投资建议</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
