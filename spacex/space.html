@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPACE — 投资备忘卡 / 02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --accent-warm: #a83d20;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+  --good: #4a6b45;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Fraunces', Georgia, serif;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138, 106, 31, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 120%, rgba(168, 61, 32, 0.04), transparent 60%);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.dossier {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
+}
+
+/* paper grain */
+.dossier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.dossier > * { position: relative; z-index: 2; }
+
+/* ============ HEADER ============ */
+.head {
+  padding: 32px 48px 24px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.head-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-align: right;
+  line-height: 1.8;
+  white-space: nowrap;
+}
+
+.head-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ============ SECTIONS ============ */
+section {
+  padding: 36px 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .cn { color: var(--ink); }
+.section-title .en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* ============ FINANCIALS TABLE ============ */
+.fin-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  border: 1px solid var(--rule);
+}
+
+.fin-grid > div {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.fin-grid > div:nth-child(4n) { border-right: none; }
+.fin-grid > div:nth-last-child(-n+4) { border-bottom: none; }
+
+.fin-head {
+  background: rgba(138, 106, 31, 0.06);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.fin-label { color: var(--ink-muted); font-size: 12px; }
+.fin-num { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fin-num.hi { color: var(--accent); font-weight: 700; }
+.fin-num.good { color: var(--good); }
+.fin-num.bad { color: var(--bad); font-weight: 700; }
+
+/* 3-col variant */
+.fin-grid.cols-3 {
+  grid-template-columns: 1.2fr 1fr 1.8fr;
+}
+.fin-grid.cols-3 > div:nth-child(4n) { border-right: 1px solid var(--rule); }
+.fin-grid.cols-3 > div:nth-child(3n) { border-right: none; }
+.fin-grid.cols-3 > div:nth-last-child(-n+4) { border-bottom: 1px solid var(--rule); }
+.fin-grid.cols-3 > div:nth-last-child(-n+3) { border-bottom: none; }
+
+.fin-row-dim { color: var(--ink-dim); font-style: italic; }
+
+/* ============ SPLIT VIEW ============ */
+.split-view {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.split-cell {
+  padding: 20px 22px;
+}
+
+.split-cell.good {
+  background: rgba(74, 107, 69, 0.06);
+  border-left: 3px solid var(--good);
+}
+
+.split-cell.bad {
+  background: rgba(168, 61, 32, 0.05);
+  border-left: 3px solid var(--bad);
+}
+
+.split-label {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.split-sublabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 14px;
+}
+
+.split-metrics {
+  list-style: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--ink-muted);
+}
+
+.split-combined {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  padding: 16px;
+  border-top: 1px solid var(--rule);
+  line-height: 1.8;
+}
+
+/* ============ KPI MOSAIC ============ */
+.kpi-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 20px;
+}
+
+.kpi {
+  background: var(--surface);
+  padding: 20px;
+  position: relative;
+}
+
+.kpi-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-value .unit {
+  font-size: 14px;
+  color: var(--ink-muted);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.kpi-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+
+.kpi.warning .kpi-value { color: var(--bad); }
+.kpi.good .kpi-value { color: var(--good); }
+.kpi.flag .kpi-value { color: var(--accent); }
+
+/* ============ INVESTMENT POINTS ============ */
+.points {
+  display: grid;
+  gap: 18px;
+  counter-reset: pt;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: pt;
+}
+
+.point:first-child { border-top: none; padding-top: 0; }
+
+.point::before {
+  content: counter(pt, decimal-leading-zero);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+.point-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.point-body {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.point-body code,
+.point-body .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(138, 106, 31, 0.1);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.point-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============ GAPS BOX ============ */
+.gaps {
+  background: rgba(168, 61, 32, 0.05);
+  border: 1px solid rgba(168, 61, 32, 0.2);
+  padding: 24px 28px;
+}
+
+.gaps-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bad);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gaps-title::before {
+  content: "✕";
+  font-size: 14px;
+}
+
+.gaps ul {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.gaps li {
+  font-size: 13px;
+  color: var(--ink-muted);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.gaps li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--bad);
+}
+
+.gaps li strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  padding: 24px 48px;
+  background: rgba(138, 106, 31, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--rule);
+}
+
+.footer .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+/* ============ SECTION NOTE ============ */
+.section-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  font-family: 'Noto Serif SC', Georgia, serif;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .head, section, .footer { padding-left: 24px; padding-right: 24px; }
+  .head { grid-template-columns: 1fr; }
+  .head-meta { text-align: left; }
+  .fin-grid { grid-template-columns: 1.4fr 1fr; font-size: 11px; }
+  .fin-grid > div:nth-child(4n) { border-right: 1px solid var(--rule); }
+  .fin-grid > div { border-right: 1px solid var(--rule); }
+  .fin-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+  .kpi-mosaic { grid-template-columns: repeat(2, 1fr); }
+  .split-view { grid-template-columns: 1fr; }
+  .point { grid-template-columns: 40px 1fr; gap: 14px; }
+  .point::before { font-size: 28px; }
+  .footer { flex-direction: column; gap: 8px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<article class="dossier">
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">Investment Memory Card · No. 02</div>
+      <h1 class="title">Space<em> / 火箭发射</em></h1>
+    </div>
+    <div class="head-meta">
+      <strong>SpaceX S-1</strong><br>
+      Filed · May 20, 2026<br>
+      Card v1 · Orthogonal Labs
+    </div>
+  </header>
+
+  <!-- ============ FINANCIALS ============ -->
+  <section>
+    <div class="section-num">§ 01</div>
+    <h2 class="section-title">
+      <span class="cn">核心财务</span>
+      <span class="en">Core Financials</span>
+    </h2>
+
+    <div class="fin-grid">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">2025 FY</div>
+      <div class="fin-head">Q1 2026</div>
+      <div class="fin-head">备注</div>
+
+      <div class="fin-label">Revenue</div>
+      <div class="fin-num hi">$4.09B</div>
+      <div class="fin-num hi">$619M</div>
+      <div class="fin-num">对外收入 · 占总收入 22%</div>
+
+      <div class="fin-label">Operating Income</div>
+      <div class="fin-num bad">-$657M</div>
+      <div class="fin-num bad">-$662M</div>
+      <div class="fin-num bad">被 Starship 吃光</div>
+
+      <div class="fin-label">Adj. EBITDA</div>
+      <div class="fin-num">$653M</div>
+      <div class="fin-num bad">-$351M</div>
+      <div class="fin-num">Q1 转负 · Starship 烧加速</div>
+
+      <div class="fin-label">EBITDA Margin</div>
+      <div class="fin-num">16%</div>
+      <div class="fin-num bad">(负)</div>
+      <div class="fin-num">误导性 · 见下方拆解</div>
+
+      <div class="fin-label">Capex</div>
+      <div class="fin-num">$3.83B</div>
+      <div class="fin-num">$1.05B</div>
+      <div class="fin-num">Starbase + Starship 为主</div>
+    </div>
+
+    <!-- SPLIT VIEW -->
+    <div class="split-view">
+      <div class="split-cell good">
+        <div class="split-label">Falcon 9 + Dragon</div>
+        <div class="split-sublabel">现金奶牛 · Cash Cow</div>
+        <ul class="split-metrics">
+          <li>Revenue · ~$4.5B</li>
+          <li>Op Income · +$2–3B</li>
+          <li>Margin · 40%+</li>
+          <li>估值 · $200–300B</li>
+        </ul>
+      </div>
+      <div class="split-cell bad">
+        <div class="split-label">Starship</div>
+        <div class="split-sublabel">烧钱黑洞 · Money Pit</div>
+        <ul class="split-metrics">
+          <li>Revenue · $0</li>
+          <li>Op Loss · -$3B/yr</li>
+          <li>Margin · N/A</li>
+          <li>估值 · $0 OR $500B+</li>
+        </ul>
+      </div>
+      <div class="split-combined">
+        ↓ 合并报表 Reported as ↓<br>
+        Space Segment: Revenue $4.09B · Op Income -$657M
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPERATING METRICS ============ -->
+  <section>
+    <div class="section-num">§ 02</div>
+    <h2 class="section-title">
+      <span class="cn">业务指标</span>
+      <span class="en">Operating Metrics</span>
+    </h2>
+
+    <div class="kpi-mosaic">
+      <div class="kpi">
+        <div class="kpi-label">2025 发射次数</div>
+        <div class="kpi-value">170</div>
+        <div class="kpi-sub">Falcon 165 + Starship 5</div>
+      </div>
+      <div class="kpi good">
+        <div class="kpi-label">Payload 交付成功率</div>
+        <div class="kpi-value">100<span class="unit">%</span></div>
+        <div class="kpi-sub">全行业最佳</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Falcon 9 单价</div>
+        <div class="kpi-value">$74<span class="unit">M</span></div>
+        <div class="kpi-sub">2026 list price</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Falcon 9 边际成本</div>
+        <div class="kpi-value">$15<span class="unit">–28M</span></div>
+        <div class="kpi-sub">可变毛利率 60–80%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Booster 最高复用</div>
+        <div class="kpi-value">29<span class="unit">次</span></div>
+        <div class="kpi-sub">工业奇迹</div>
+      </div>
+      <div class="kpi flag">
+        <div class="kpi-label">内部 Starlink 发射占比</div>
+        <div class="kpi-value">74<span class="unit">%</span></div>
+        <div class="kpi-sub">123/165 · 不计入对外收入</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">全球入轨质量占比</div>
+        <div class="kpi-value">>80<span class="unit">%</span></div>
+        <div class="kpi-sub">近乎垄断</div>
+      </div>
+      <div class="kpi flag">
+        <div class="kpi-label">Starship 2025 烧钱</div>
+        <div class="kpi-value">$3<span class="unit">B+</span></div>
+        <div class="kpi-sub">Q1'26 单季 $930M</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVENUE MIX ============ -->
+  <section>
+    <div class="section-num">§ 03</div>
+    <h2 class="section-title">
+      <span class="cn">收入结构</span>
+      <span class="en">Revenue Mix · 2025</span>
+    </h2>
+
+    <div class="fin-grid cols-3">
+      <div class="fin-head">客户</div>
+      <div class="fin-head">规模</div>
+      <div class="fin-head">特征</div>
+
+      <div class="fin-label fin-row-dim">内部 Starlink (intersegment)</div>
+      <div class="fin-num fin-row-dim">~$8B 经济等值 (non-GAAP)</div>
+      <div class="fin-label fin-row-dim">123 次发射 · 合并时抵消</div>
+
+      <div class="fin-label">NASA</div>
+      <div class="fin-num">~$1.5–2B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">Crew $4.93B (锁 2030) · HLS $4.5B · CRS 持续</div>
+
+      <div class="fin-label">DoD / NRO / Space Force</div>
+      <div class="fin-num">~$1.5B+</div>
+      <div class="fin-label" style="color: var(--ink-muted);">NSSL Phase 3 $5.9B · NRO $1.8B · Golden Dome $2B</div>
+
+      <div class="fin-label">商业发射</div>
+      <div class="fin-num">~$2–2.5B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">30–40 次/年 · 老业务增长慢</div>
+
+      <div class="fin-label">Dragon 载人 / 货运</div>
+      <div class="fin-num">~$0.5–0.7B</div>
+      <div class="fin-label" style="color: var(--ink-muted);">NASA 为主 · 商业 Axiom 等</div>
+    </div>
+
+    <p class="section-note">注:政府 + NASA 合计占外部收入约 70%,客户集中度极高,但核心客户是美国国家安全机构,粘性强、不可替代。</p>
+  </section>
+
+  <!-- ============ INVESTMENT POINTS ============ -->
+  <section>
+    <div class="section-num">§ 04</div>
+    <h2 class="section-title">
+      <span class="cn">投资跟踪要点</span>
+      <span class="en">5 Things to Track</span>
+    </h2>
+
+    <div class="points">
+      <div class="point">
+        <div>
+          <div class="point-title">Starship V3 何时商业化(整个估值的支点)</div>
+          <div class="point-body">
+            计划 2026 Q2 首飞已推迟到 6 月,Block 3 关键的轨道燃料加注测试已延迟 12+ 月。SpaceX 历史延误率高:Falcon Heavy 5 年 · Crew Dragon 3 年 · Starship 入轨 21 月 · Super Heavy catch 6–12 月。<strong>每延迟一年,Space 分部估值需要重新计算 $300–500B option value。</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">内部转移定价的黑箱:不只是定价不透明,更是会计抵消问题</div>
+          <div class="point-body">
+            Falcon 9 给 Starlink 发 123 次卫星按什么价格结算?S-1 没披露。<strong>两层影响</strong>:① 这部分内部"收入"在合并报表层面被 intersegment 抵消,Space 分部 $4.09B 是 external revenue,不是真实经济活动规模(按市场价推算约 $12B+);② 内部计价方式决定了两个分部的 margin 假象——按 <code>$67M</code> 市场价记账则 Starlink margin 偏低、Space 偏高;按 <code>$18M</code> 边际成本记账则反之。<strong>这是判断 SOTP 估值最关键的未知数。</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">政府订单的厚度 = 真实现金流锚</div>
+          <div class="point-body">
+            backlog 已经 $20B+,NSSL Phase 3 + HLS + Golden Dome 锁到 2029–2030。<strong>如果剥离 Starship,Falcon + Dragon 单独估值 $200–300B</strong>(对标 Lockheed Martin 15–20x EBITDA)。这是 Space 分部真正的 defendable value。
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">供应链投资几乎无 alpha</div>
+          <div class="point-body">
+            SpaceX 极度垂直整合 — Merlin / Raptor 引擎 · 航电 · 推进剂罐全部 in-house。唯一勉强相关:<code>HXL</code> 碳纤维 · <code>TDG</code> Dragon 降落伞 · Toray 3402 碳纤维,但占比都 &lt;2%。<strong>Space 分部不是供应链投资的好猎场,跟 Starlink 的 STM 逻辑完全不同。</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">Starship 成本曲线:$30M/launch 能否达成</div>
+          <div class="point-body">
+            Musk 声称 V3 量产后边际成本 <code>$30M</code> / 100 吨入轨 = <code>$300/kg</code>(Falcon 9 是 <code>$2,500/kg</code>)。<strong>这条曲线决定 Starship 商业化后的经济性</strong> — 跑通了是"轨道经济革命"(orbital data center / 火星 / D2C 6G),跑不通整体 $2 万亿估值要被砍一半。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DISCLOSURE GAPS ============ -->
+  <section>
+    <div class="section-num">§ 05</div>
+    <h2 class="section-title">
+      <span class="cn">信息空白</span>
+      <span class="en">Undisclosed but Material</span>
+    </h2>
+
+    <div class="gaps">
+      <div class="gaps-title">S-1 没披露 · 但很关键</div>
+      <ul>
+        <li><strong>Falcon 9 + Dragon 单独的 P&amp;L</strong> — 跟 Starship 混在一起,看不出印钞机的真实 margin</li>
+        <li><strong>Internal transfer pricing methodology</strong> — Falcon 内部发射如何计价,完全黑箱</li>
+        <li><strong>Starship 累计已烧现金总额</strong> — 只披露年度 R&amp;D,累计估计 $10B+</li>
+        <li><strong>Starshield 业务在 segment 间的归属</strong> — 卫星运营计入 Connectivity · 发射成本归 Space · 内部分摊不透明</li>
+        <li><strong>Starship V3 商业化时间表 + cost target 承诺</strong> — 只给方向性表述 · 无具体 milestone 保证</li>
+        <li><strong>Raptor V3 引擎的良率和量产能力</strong> — Starship cadence 的真实瓶颈</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>SPACE <span class="dot"></span> CARD 02 OF SPACEX SERIES</div>
+    <div>NEXT: xAI / SOTP</div>
+  </footer>
+
+</article>
+
+</body>
+</html>
