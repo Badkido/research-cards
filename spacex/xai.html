@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPACE — 投资备忘卡 / 02</title>
+<title>xAI — 投资备忘卡 / 03</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -50,7 +50,6 @@ body {
   box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
 }
 
-/* paper grain */
 .dossier::before {
   content: "";
   position: absolute;
@@ -194,15 +193,11 @@ section:last-child { border-bottom: none; }
 .fin-num.bad { color: var(--bad); font-weight: 700; }
 
 /* 3-col variant */
-.fin-grid.cols-3 {
-  grid-template-columns: 1.2fr 1fr 1.8fr;
-}
+.fin-grid.cols-3 { grid-template-columns: 1.2fr 1fr 1.8fr; }
 .fin-grid.cols-3 > div:nth-child(4n) { border-right: 1px solid var(--rule); }
 .fin-grid.cols-3 > div:nth-child(3n) { border-right: none; }
 .fin-grid.cols-3 > div:nth-last-child(-n+4) { border-bottom: 1px solid var(--rule); }
 .fin-grid.cols-3 > div:nth-last-child(-n+3) { border-bottom: none; }
-
-.fin-row-dim { color: var(--ink-dim); font-style: italic; }
 
 /* ============ SPLIT VIEW ============ */
 .split-view {
@@ -212,13 +207,15 @@ section:last-child { border-bottom: none; }
   gap: 16px;
 }
 
-.split-cell {
-  padding: 20px 22px;
+.split-view.split-stacked {
+  grid-template-columns: 1fr;
 }
 
-.split-cell.good {
-  background: rgba(74, 107, 69, 0.06);
-  border-left: 3px solid var(--good);
+.split-cell { padding: 20px 22px; }
+
+.split-cell.accent {
+  background: rgba(138, 106, 31, 0.07);
+  border-left: 3px solid var(--accent);
 }
 
 .split-cell.bad {
@@ -263,10 +260,10 @@ section:last-child { border-bottom: none; }
   line-height: 1.8;
 }
 
-/* ============ KPI MOSAIC ============ */
+/* ============ KPI MOSAIC — 3 col for this card ============ */
 .kpi-mosaic {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
@@ -315,6 +312,43 @@ section:last-child { border-bottom: none; }
 .kpi.warning .kpi-value { color: var(--bad); }
 .kpi.good .kpi-value { color: var(--good); }
 .kpi.flag .kpi-value { color: var(--accent); }
+
+/* ★ starred KPI strip */
+.kpi-star-strip {
+  border: 1px solid var(--rule);
+  border-top: none;
+  padding: 14px 20px;
+  background: rgba(138, 106, 31, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.kpi-star-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.kpi-star-value {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  font-variation-settings: "opsz" 144;
+}
+
+.kpi-star-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  flex: 1;
+}
 
 /* ============ INVESTMENT POINTS ============ */
 .points {
@@ -370,10 +404,7 @@ section:last-child { border-bottom: none; }
   border-radius: 2px;
 }
 
-.point-body strong {
-  color: var(--ink);
-  font-weight: 600;
-}
+.point-body strong { color: var(--ink); font-weight: 600; }
 
 /* ============ GAPS BOX ============ */
 .gaps {
@@ -394,16 +425,9 @@ section:last-child { border-bottom: none; }
   gap: 10px;
 }
 
-.gaps-title::before {
-  content: "✕";
-  font-size: 14px;
-}
+.gaps-title::before { content: "✕"; font-size: 14px; }
 
-.gaps ul {
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
+.gaps ul { list-style: none; display: grid; gap: 10px; }
 
 .gaps li {
   font-size: 13px;
@@ -413,16 +437,16 @@ section:last-child { border-bottom: none; }
   line-height: 1.6;
 }
 
-.gaps li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: var(--bad);
-}
+.gaps li::before { content: "—"; position: absolute; left: 0; color: var(--bad); }
+.gaps li strong { color: var(--ink); font-weight: 600; }
 
-.gaps li strong {
-  color: var(--ink);
-  font-weight: 600;
+/* ============ SECTION NOTE ============ */
+.section-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  font-family: 'Noto Serif SC', Georgia, serif;
 }
 
 /* ============ FOOTER ============ */
@@ -449,15 +473,6 @@ section:last-child { border-bottom: none; }
   vertical-align: middle;
 }
 
-/* ============ SECTION NOTE ============ */
-.section-note {
-  margin-top: 16px;
-  font-size: 12px;
-  color: var(--ink-muted);
-  line-height: 1.7;
-  font-family: 'Noto Serif SC', Georgia, serif;
-}
-
 /* ============ RESPONSIVE ============ */
 @media (max-width: 720px) {
   body { padding: 20px 12px; }
@@ -469,7 +484,7 @@ section:last-child { border-bottom: none; }
   .fin-grid > div { border-right: 1px solid var(--rule); }
   .fin-grid.cols-3 { grid-template-columns: 1fr 1fr; }
   .kpi-mosaic { grid-template-columns: repeat(2, 1fr); }
-  .split-view { grid-template-columns: 1fr; }
+  .kpi-star-strip { flex-wrap: wrap; gap: 10px; }
   .point { grid-template-columns: 40px 1fr; gap: 14px; }
   .point::before { font-size: 28px; }
   .footer { flex-direction: column; gap: 8px; align-items: flex-start; }
@@ -482,17 +497,17 @@ section:last-child { border-bottom: none; }
 
   <header class="head">
     <div>
-      <div class="eyebrow">Investment Memory Card · No. 02</div>
-      <h1 class="title">Space<em> / 火箭发射</em></h1>
+      <div class="eyebrow">Investment Memory Card · No. 03</div>
+      <h1 class="title">xAI<em> / 烧钱炉</em></h1>
     </div>
     <div class="head-meta">
-      <strong>SpaceX S-1</strong><br>
+      <strong>SpaceX S-1 · xAI 段</strong><br>
       Filed · May 20, 2026<br>
       Card v1 · Orthogonal Labs
     </div>
   </header>
 
-  <!-- ============ FINANCIALS ============ -->
+  <!-- ============ §01 FINANCIALS ============ -->
   <section>
     <div class="section-num">§ 01</div>
     <h2 class="section-title">
@@ -507,61 +522,63 @@ section:last-child { border-bottom: none; }
       <div class="fin-head">备注</div>
 
       <div class="fin-label">Revenue</div>
-      <div class="fin-num hi">$4.09B</div>
-      <div class="fin-num hi">$619M</div>
-      <div class="fin-num">对外收入 · 占总收入 22%</div>
+      <div class="fin-num hi">$3.2B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">AI 段(含 X)· 大头是 X 旧广告</div>
 
       <div class="fin-label">Operating Income</div>
-      <div class="fin-num bad">-$657M</div>
-      <div class="fin-num bad">-$662M</div>
-      <div class="fin-num bad">被 Starship 吃光</div>
+      <div class="fin-num bad">-$6.36B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num bad">被算力 capex 吃光</div>
 
-      <div class="fin-label">Adj. EBITDA</div>
-      <div class="fin-num">$653M</div>
-      <div class="fin-num bad">-$351M</div>
-      <div class="fin-num">Q1 转负 · Starship 烧加速</div>
-
-      <div class="fin-label">EBITDA Margin</div>
-      <div class="fin-num">16%</div>
-      <div class="fin-num bad">(负)</div>
-      <div class="fin-num">误导性 · 见下方拆解</div>
+      <div class="fin-label">Op Margin</div>
+      <div class="fin-num bad">-200%</div>
+      <div class="fin-num bad">~-302%(年化)</div>
+      <div class="fin-num bad">规模越大越亏</div>
 
       <div class="fin-label">Capex</div>
-      <div class="fin-num">$3.83B</div>
-      <div class="fin-num">$1.05B</div>
-      <div class="fin-num">Starbase + Starship 为主</div>
+      <div class="fin-num">$12.7B</div>
+      <div class="fin-num">$7.7B</div>
+      <div class="fin-num">占 SpaceX 并表 61% · 年化 $30.8B</div>
+
+      <div class="fin-label">Monthly Burn</div>
+      <div class="fin-num bad">~$1B/mo</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num bad">年化经营烧钱 ~$12B</div>
     </div>
 
-    <!-- SPLIT VIEW -->
-    <div class="split-view">
-      <div class="split-cell good">
-        <div class="split-label">Falcon 9 + Dragon</div>
-        <div class="split-sublabel">现金奶牛 · Cash Cow</div>
+    <!-- STACKED SPLIT VIEW -->
+    <div class="split-view split-stacked">
+      <div class="split-cell accent">
+        <div class="split-label">AI 原生 · 生成式软件</div>
+        <div class="split-sublabel">Real but Tiny</div>
         <ul class="split-metrics">
-          <li>Revenue · ~$4.5B</li>
-          <li>Op Income · +$2–3B</li>
-          <li>Margin · 40%+</li>
-          <li>估值 · $200–300B</li>
+          <li>ARR ~$500M</li>
+          <li>增速高</li>
+          <li>毛利受 GPU 容量约束</li>
+          <li>问题:吸收不了 capex</li>
         </ul>
       </div>
       <div class="split-cell bad">
-        <div class="split-label">Starship</div>
-        <div class="split-sublabel">烧钱黑洞 · Money Pit</div>
+        <div class="split-label">X 继承盘 · 广告+订阅</div>
+        <div class="split-sublabel">Mature · 承压</div>
         <ul class="split-metrics">
-          <li>Revenue · $0</li>
-          <li>Op Loss · -$3B/yr</li>
-          <li>Margin · N/A</li>
-          <li>估值 · $0 OR $500B+</li>
+          <li>规模 ~$2.7B</li>
+          <li>增速低/承压</li>
+          <li>旧社交广告</li>
+          <li>问题:非 AI 增长</li>
         </ul>
       </div>
       <div class="split-combined">
         ↓ 合并报表 Reported as ↓<br>
-        Space Segment: Revenue $4.09B · Op Income -$657M
+        AI Segment: Revenue $3.2B · Op Income -$6.36B
       </div>
     </div>
+
+    <p class="section-note">注:独立 ARR ~$500M 对应年化 ~$12B 烧钱 = 24:1 亏损/收入比,已披露 AI 同业最极端。FY24 段收入约 $2.6B、经营亏损约 $1.6B(按增速反推,非审计披露)。</p>
   </section>
 
-  <!-- ============ OPERATING METRICS ============ -->
+  <!-- ============ §02 OPERATING METRICS ============ -->
   <section>
     <div class="section-num">§ 02</div>
     <h2 class="section-title">
@@ -571,49 +588,44 @@ section:last-child { border-bottom: none; }
 
     <div class="kpi-mosaic">
       <div class="kpi">
-        <div class="kpi-label">2025 发射次数</div>
-        <div class="kpi-value">170</div>
-        <div class="kpi-sub">Falcon 165 + Starship 5</div>
+        <div class="kpi-label">X + Grok 月活</div>
+        <div class="kpi-value">6<span class="unit">亿</span></div>
+        <div class="kpi-sub">分发优势真实 · 跨 X 与 Grok</div>
       </div>
       <div class="kpi good">
-        <div class="kpi-label">Payload 交付成功率</div>
-        <div class="kpi-value">100<span class="unit">%</span></div>
-        <div class="kpi-sub">全行业最佳</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Falcon 9 单价</div>
-        <div class="kpi-value">$74<span class="unit">M</span></div>
-        <div class="kpi-sub">2026 list price</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Falcon 9 边际成本</div>
-        <div class="kpi-value">$15<span class="unit">–28M</span></div>
-        <div class="kpi-sub">可变毛利率 60–80%</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Booster 最高复用</div>
-        <div class="kpi-value">29<span class="unit">次</span></div>
-        <div class="kpi-sub">工业奇迹</div>
+        <div class="kpi-label">Grok 美国聊天市占</div>
+        <div class="kpi-value">17.8<span class="unit">%</span></div>
+        <div class="kpi-sub">2025-01 仅 1.9% · 一年内跃升</div>
       </div>
       <div class="kpi flag">
-        <div class="kpi-label">内部 Starlink 发射占比</div>
-        <div class="kpi-value">74<span class="unit">%</span></div>
-        <div class="kpi-sub">123/165 · 不计入对外收入</div>
+        <div class="kpi-label">H100 当量</div>
+        <div class="kpi-value">>100<span class="unit">万</span></div>
+        <div class="kpi-sub">Colossus I / II · 全球最大集群</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">全球入轨质量占比</div>
-        <div class="kpi-value">>80<span class="unit">%</span></div>
-        <div class="kpi-sub">近乎垄断</div>
+        <div class="kpi-label">Colossus 2 部署周期</div>
+        <div class="kpi-value">91<span class="unit">天</span></div>
+        <div class="kpi-sub">比 Colossus 1 的 122 天更快</div>
       </div>
       <div class="kpi flag">
-        <div class="kpi-label">Starship 2025 烧钱</div>
-        <div class="kpi-value">$3<span class="unit">B+</span></div>
-        <div class="kpi-sub">Q1'26 单季 $930M</div>
+        <div class="kpi-label">第三座孟菲斯楼</div>
+        <div class="kpi-value">~2<span class="unit">GW</span></div>
+        <div class="kpi-sub">目标总容量 · capex 只升不降</div>
       </div>
+      <div class="kpi warning">
+        <div class="kpi-label">每月活摊 opex+capex</div>
+        <div class="kpi-value">~$191</div>
+        <div class="kpi-sub">单位经济硬伤</div>
+      </div>
+    </div>
+    <div class="kpi-star-strip">
+      <div class="kpi-star-label">★ Colossus 1 → Anthropic</div>
+      <div class="kpi-star-value">300MW</div>
+      <div class="kpi-star-note">2026-05 整租(22 万 GPU)· 把竞争对手变租户</div>
     </div>
   </section>
 
-  <!-- ============ REVENUE MIX ============ -->
+  <!-- ============ §03 REVENUE MIX ============ -->
   <section>
     <div class="section-num">§ 03</div>
     <h2 class="section-title">
@@ -622,35 +634,35 @@ section:last-child { border-bottom: none; }
     </h2>
 
     <div class="fin-grid cols-3">
-      <div class="fin-head">客户</div>
+      <div class="fin-head">来源</div>
       <div class="fin-head">规模</div>
       <div class="fin-head">特征</div>
 
-      <div class="fin-label fin-row-dim">内部 Starlink (intersegment)</div>
-      <div class="fin-num fin-row-dim">~$8B 经济等值 (non-GAAP)</div>
-      <div class="fin-label fin-row-dim">123 次发射 · 合并时抵消</div>
+      <div class="fin-label">X + Grok 订阅</div>
+      <div class="fin-num">$365M</div>
+      <div class="fin-label" style="color: var(--ink-muted);">SuperGrok $30 · Heavy $300 · Business $30/席</div>
 
-      <div class="fin-label">NASA</div>
-      <div class="fin-num">~$1.5–2B</div>
-      <div class="fin-label" style="color: var(--ink-muted);">Crew $4.93B (锁 2030) · HLS $4.5B · CRS 持续</div>
+      <div class="fin-label">数据授权</div>
+      <div class="fin-num">$88M</div>
+      <div class="fin-label" style="color: var(--ink-muted);">Data licensing</div>
 
-      <div class="fin-label">DoD / NRO / Space Force</div>
-      <div class="fin-num">~$1.5B+</div>
-      <div class="fin-label" style="color: var(--ink-muted);">NSSL Phase 3 $5.9B · NRO $1.8B · Golden Dome $2B</div>
+      <div class="fin-label">广告 (X)</div>
+      <div class="fin-num">$116M+</div>
+      <div class="fin-label" style="color: var(--ink-muted);">列示部分 · 其余未细分,推测 X 广告大盘</div>
 
-      <div class="fin-label">商业发射</div>
-      <div class="fin-num">~$2–2.5B</div>
-      <div class="fin-label" style="color: var(--ink-muted);">30–40 次/年 · 老业务增长慢</div>
+      <div class="fin-label">政府</div>
+      <div class="fin-num">$200M*</div>
+      <div class="fin-label" style="color: var(--ink-muted);">DoD 上限合同 + GSA OneGov 通道</div>
 
-      <div class="fin-label">Dragon 载人 / 货运</div>
-      <div class="fin-num">~$0.5–0.7B</div>
-      <div class="fin-label" style="color: var(--ink-muted);">NASA 为主 · 商业 Axiom 等</div>
+      <div class="fin-label">API / 开发者</div>
+      <div class="fin-num">n.d.</div>
+      <div class="fin-label" style="color: var(--ink-muted);">未单独披露 · 受 GPU 容量约束</div>
     </div>
 
-    <p class="section-note">注:政府 + NASA 合计占外部收入约 70%,客户集中度极高,但核心客户是美国国家安全机构,粘性强、不可替代。</p>
+    <p class="section-note">注:*合同上限,非已确认收入。AI 原生 ARR ~$500M;段收入 $3.2B 仅约 $581M 列示,其余约 $2.6B 未细分——客户与收入质量与"AI 增长"叙事不一致。</p>
   </section>
 
-  <!-- ============ INVESTMENT POINTS ============ -->
+  <!-- ============ §04 INVESTMENT POINTS ============ -->
   <section>
     <div class="section-num">§ 04</div>
     <h2 class="section-title">
@@ -661,52 +673,52 @@ section:last-child { border-bottom: none; }
     <div class="points">
       <div class="point">
         <div>
-          <div class="point-title">Starship V3 何时商业化(整个估值的支点)</div>
+          <div class="point-title">单位经济学能否收敛(整个估值的支点)</div>
           <div class="point-body">
-            计划 2026 Q2 首飞已推迟到 6 月,Block 3 关键的轨道燃料加注测试已延迟 12+ 月。SpaceX 历史延误率高:Falcon Heavy 5 年 · Crew Dragon 3 年 · Starship 入轨 21 月 · Super Heavy catch 6–12 月。<strong>每延迟一年,Space 分部估值需要重新计算 $300–500B option value。</strong>
+            经营利润率 <code>-60%</code> → <code>-200%</code> → 年化 <code>-302%</code>,每月活摊 <code>~$191</code>,capex 从 <code>$12.7B</code> 跳到年化 <code>$30.8B</code>。规模化在恶化经济性,不是改善。每烧一年,SOTP 里 AI 段的 option value 就要重算。核心空头逻辑。
           </div>
         </div>
       </div>
 
       <div class="point">
         <div>
-          <div class="point-title">内部转移定价的黑箱:不只是定价不透明,更是会计抵消问题</div>
+          <div class="point-title">算力出租能否规模化(唯一能改写叙事的杠杆)</div>
           <div class="point-body">
-            Falcon 9 给 Starlink 发 123 次卫星按什么价格结算?S-1 没披露。<strong>两层影响</strong>:① 这部分内部"收入"在合并报表层面被 intersegment 抵消,Space 分部 $4.09B 是 external revenue,不是真实经济活动规模(按市场价推算约 $12B+);② 内部计价方式决定了两个分部的 margin 假象——按 <code>$67M</code> 市场价记账则 Starlink margin 偏低、Space 偏高;按 <code>$18M</code> 边际成本记账则反之。<strong>这是判断 SOTP 估值最关键的未知数。</strong>
+            把 Colossus 1 整体租给 Anthropic,将折旧型 GPU capex 转成合约现金流,部分把 xAI 重定位成 AI 公用事业/收费站。盯:租约金额 · 期限 · 可续性 · 租金水平。但这一步本身就是承认——<strong>自家软件 ARR 吸收不了 capex。</strong>
           </div>
         </div>
       </div>
 
       <div class="point">
         <div>
-          <div class="point-title">政府订单的厚度 = 真实现金流锚</div>
+          <div class="point-title">$3.2B 段收入的质量与抵消(SOTP 关键未知数)</div>
           <div class="point-body">
-            backlog 已经 $20B+,NSSL Phase 3 + HLS + Golden Dome 锁到 2029–2030。<strong>如果剥离 Starship,Falcon + Dragon 单独估值 $200–300B</strong>(对标 Lockheed Martin 15–20x EBITDA)。这是 Space 分部真正的 defendable value。
+            大头是 X 继承广告盘,AI 原生 ARR 仅 <code>~$500M</code>。和 SpaceX 的 intersegment 一样,合并口径掩盖真实 AI 经济规模。AI 段到底值多少,取决于把它当 <code>$500M</code> 高增软件还是 <code>$3.2B</code> 成熟广告——<strong>两种 SOTP 差出一个数量级。</strong>
           </div>
         </div>
       </div>
 
       <div class="point">
         <div>
-          <div class="point-title">供应链投资几乎无 alpha</div>
+          <div class="point-title">估值标记的歧义</div>
           <div class="point-body">
-            SpaceX 极度垂直整合 — Merlin / Raptor 引擎 · 航电 · 推进剂罐全部 in-house。唯一勉强相关:<code>HXL</code> 碳纤维 · <code>TDG</code> Dragon 降落伞 · Toray 3402 碳纤维,但占比都 &lt;2%。<strong>Space 分部不是供应链投资的好猎场,跟 Starlink 的 STM 逻辑完全不同。</strong>
+            合并换股作价 <code>~$80B</code> vs Series E <code>$230B</code> vs 头条口径 <code>$250B</code>。公开市场为这块付的价、合并体 SOTP 里 AI 段的权重,完全取决于用哪个 mark。<strong>这个缺口本身就是定价风险。</strong>
           </div>
         </div>
       </div>
 
       <div class="point">
         <div>
-          <div class="point-title">Starship 成本曲线:$30M/launch 能否达成</div>
+          <div class="point-title">Grok "数万亿参数" 的 capex 承诺</div>
           <div class="point-body">
-            Musk 声称 V3 量产后边际成本 <code>$30M</code> / 100 吨入轨 = <code>$300/kg</code>(Falcon 9 是 <code>$2,500/kg</code>)。<strong>这条曲线决定 Starship 商业化后的经济性</strong> — 跑通了是"轨道经济革命"(orbital data center / 火星 / D2C 6G),跑不通整体 $2 万亿估值要被砍一半。
+            S-1 称要把 Grok 扩到 multiple trillions 参数,意味 capex 只升不降。这条曲线决定烧钱何时见顶——跑不通,合并体的航天倍数会被 AI 段拖累;跑通了,<code>$500M</code> ARR 也要先长一个数量级才撑得住。
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ DISCLOSURE GAPS ============ -->
+  <!-- ============ §05 DISCLOSURE GAPS ============ -->
   <section>
     <div class="section-num">§ 05</div>
     <h2 class="section-title">
@@ -717,19 +729,19 @@ section:last-child { border-bottom: none; }
     <div class="gaps">
       <div class="gaps-title">S-1 没披露 · 但很关键</div>
       <ul>
-        <li><strong>Falcon 9 + Dragon 单独的 P&amp;L</strong> — 跟 Starship 混在一起,看不出印钞机的真实 margin</li>
-        <li><strong>Internal transfer pricing methodology</strong> — Falcon 内部发射如何计价,完全黑箱</li>
-        <li><strong>Starship 累计已烧现金总额</strong> — 只披露年度 R&amp;D,累计估计 $10B+</li>
-        <li><strong>Starshield 业务在 segment 间的归属</strong> — 卫星运营计入 Connectivity · 发射成本归 Space · 内部分摊不透明</li>
-        <li><strong>Starship V3 商业化时间表 + cost target 承诺</strong> — 只给方向性表述 · 无具体 milestone 保证</li>
-        <li><strong>Raptor V3 引擎的良率和量产能力</strong> — Starship cadence 的真实瓶颈</li>
+        <li><strong>xAI 生成式软件独立 P&amp;L</strong> — 跟 X 混在一起,看不出真实 AI margin</li>
+        <li><strong>$3.2B 段收入的完整拆分</strong> — 仅约 $581M 列示,其余约 $2.6B 未细分(推测 X 广告)</li>
+        <li><strong>换股估值方法</strong> — xAI ~$80B 作价如何得出 · vs $230B 私募 mark 的桥接</li>
+        <li><strong>算力出租合约条款</strong> — Anthropic 租约金额/期限/定价/是否可续,全黑箱</li>
+        <li><strong>xAI 累计已烧现金总额</strong> — 只给年度 · 累计估计 $10B+</li>
+        <li><strong>Colossus 折旧政策与 GPU 残值假设</strong> — 决定"公用事业"路径的真实毛利</li>
       </ul>
     </div>
   </section>
 
   <footer class="footer">
-    <div>SPACE <span class="dot"></span> CARD 02 OF SPACEX SERIES</div>
-    <div><a href="xai.html" style="color: inherit; text-decoration: none; letter-spacing: inherit;">NEXT: xAI / SOTP →</a></div>
+    <div>xAI <span class="dot"></span> CARD 03 OF SPACEX SERIES</div>
+    <div>NEXT: SOTP / 合并估值</div>
   </footer>
 
 </article>
