@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha Screener — Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --rule: #d9d2c2;
+  --bad: #a83d20;
+  --sidebar: 260px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+body {
+  background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138,106,31,0.06), transparent 60%);
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar);
+  min-height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--rule);
+  padding: 40px 24px;
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.sidebar-label::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.field { margin-bottom: 20px; }
+.field label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.field input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  outline: none;
+}
+.field input[type="number"]:focus {
+  border-color: var(--accent);
+}
+
+.sidebar hr { border: none; border-top: 1px solid var(--rule); margin: 20px 0; }
+
+.run-btn {
+  width: 100%;
+  padding: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.run-btn:hover { background: var(--accent); color: var(--surface); }
+.run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Main ── */
+.main {
+  margin-left: var(--sidebar);
+  flex: 1;
+  padding: 48px 48px 80px;
+  max-width: 1200px;
+}
+
+/* Header */
+.brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.brand::before { content: ""; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+h1 em { font-weight: 400; font-style: italic; color: var(--ink-muted); }
+
+.subtitle {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 40px;
+}
+
+/* Section headers */
+.section-header { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.section-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+
+/* Metrics */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+.metric {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 16px 20px;
+}
+.metric-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* Table */
+table.ol-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  table-layout: auto;
+}
+table.ol-table thead tr { border-bottom: 1px solid var(--rule); }
+table.ol-table thead th {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 400;
+  padding: 8px 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+table.ol-table tbody tr { border-bottom: 1px solid var(--rule); transition: background 0.1s; }
+table.ol-table tbody tr:last-child { border-bottom: none; }
+table.ol-table tbody tr:hover { background: rgba(138,106,31,0.04); }
+table.ol-table tbody td { padding: 7px 12px; color: var(--ink); vertical-align: middle; line-height: 1.3; }
+table.ol-table td.sym { font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; letter-spacing: -0.01em; }
+table.ol-table td.mono { font-family: 'JetBrains Mono', monospace; color: var(--ink-muted); font-size: 10px; word-break: break-all; max-width: 200px; }
+table.ol-table td.num { font-family: 'JetBrains Mono', monospace; text-align: right; }
+table.ol-table td.rank { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); width: 36px; }
+table.ol-table td.dim { color: var(--ink-dim); }
+
+/* Progress */
+.progress-wrap { margin: 24px 0; }
+.progress-bar-bg { background: var(--rule); border-radius: 2px; height: 3px; width: 100%; overflow: hidden; }
+.progress-bar-fg { background: var(--accent); height: 3px; width: 0%; transition: width 0.2s; }
+.progress-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); letter-spacing: 0.1em; margin-top: 8px; }
+
+/* Download */
+.dl-btn {
+  margin-top: 12px;
+  display: inline-block;
+  padding: 8px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.12s;
+}
+.dl-btn:hover { border-color: var(--accent); }
+
+/* Warning */
+.warn {
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+}
+
+/* Idle state */
+.idle {
+  margin-top: 40px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+}
+
+/* Footer */
+footer {
+  margin-top: 72px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-label">Screener Params</div>
+
+  <div class="field">
+    <label>FDV 下限 ($)</label>
+    <input type="number" id="fdvMin" value="70000000" step="1000000">
+  </div>
+  <div class="field">
+    <label>FDV 上限 ($)</label>
+    <input type="number" id="fdvMax" value="200000000" step="1000000">
+  </div>
+  <div class="field">
+    <label>请求间隔 (ms)</label>
+    <input type="number" id="sleepMs" value="250" step="50" min="100" max="1000">
+  </div>
+
+  <hr>
+  <button class="run-btn" id="runBtn" onclick="runScreener()">运行筛选</button>
+</aside>
+
+<!-- Main -->
+<main class="main">
+  <p class="brand">Orthogonal Labs &nbsp;·&nbsp; Alpha Screener</p>
+  <h1>Alpha <em>Screener</em></h1>
+  <p class="subtitle" id="subtitle">未上永续合约 · FDV 筛选</p>
+
+  <div id="idleMsg" class="idle">在左侧设置筛选参数，点击「运行筛选」开始。</div>
+
+  <!-- Progress -->
+  <div id="progressWrap" class="progress-wrap hidden">
+    <div class="progress-bar-bg"><div class="progress-bar-fg" id="progressFg"></div></div>
+    <div class="progress-text" id="progressText">初始化...</div>
+  </div>
+
+  <!-- Section 1: Top 20 DEX Vol -->
+  <div id="sec1" class="hidden">
+    <div class="section-header">
+      <div class="section-tag">— Vol Ranking</div>
+      <div class="section-title">未上合约 Alpha — 24h 成交量 Top 20</div>
+      <div class="section-caption" id="sec1Cap"></div>
+    </div>
+    <div id="table1"></div>
+    <a class="dl-btn" id="dl1" href="#" download="alpha_top20_dex.csv">下载 Top 20 CSV</a>
+  </div>
+
+  <hr class="divider hidden" id="div1">
+
+  <!-- Section 2: Top 20 CMC Alpha Vol -->
+  <div id="sec2" class="hidden">
+    <div class="section-header">
+      <div class="section-tag">— CMC Alpha Vol Ranking</div>
+      <div class="section-title">未上合约 Alpha — Binance Alpha 界面量 Top 20</div>
+      <div class="section-caption">数据来源：CoinMarketCap · 仅计算通过 Binance Alpha 界面的交易量</div>
+    </div>
+    <div id="table2"></div>
+    <a class="dl-btn" id="dl2" href="#" download="alpha_top20_cmc.csv">下载 CMC Top 20 CSV</a>
+  </div>
+
+  <hr class="divider hidden" id="div2">
+
+  <!-- Section 3: FDV Screener -->
+  <div id="sec3" class="hidden">
+    <div class="section-header">
+      <div class="section-tag">— FDV Filter</div>
+      <div class="section-title">FDV 筛选结果</div>
+    </div>
+    <div class="metrics" id="metrics"></div>
+    <div id="table3"></div>
+    <a class="dl-btn" id="dl3" href="#" download="alpha_screened.csv">下载 CSV</a>
+  </div>
+
+  <footer>
+    <span>Orthogonal Labs · Alpha Screener</span>
+    <span id="footerTime"></span>
+  </footer>
+</main>
+
+<script>
+const TOKEN_LIST = 'https://www.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/cex/alpha/all/token/list';
+const KLINES    = 'https://www.binance.com/bapi/defi/v1/public/alpha-trade/klines';
+const FAPI      = 'https://fapi.binance.com/fapi/v1/exchangeInfo';
+const DAPI      = 'https://dapi.binance.com/dapi/v1/exchangeInfo';
+const CMC_URL   = 'https://api.coinmarketcap.com/data-api/v3/exchange/market-pairs/latest?slug=binance-alpha&category=spot&limit=750';
+
+const $ = id => document.getElementById(id);
+
+function setProgress(pct, msg) {
+  $('progressFg').style.width = pct + '%';
+  $('progressText').textContent = msg;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function getJson(url) {
+  const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText} — ${url}`);
+  return r.json();
+}
+
+async function fetchTokens() {
+  const d = await getJson(TOKEN_LIST);
+  return d.data || [];
+}
+
+async function fetchPerpAssets() {
+  const perp = new Set();
+  for (const url of [FAPI, DAPI]) {
+    try {
+      const d = await getJson(url);
+      for (const s of (d.symbols || [])) {
+        if (s.contractType === 'PERPETUAL' && ['TRADING','PENDING_TRADING'].includes(s.status)) {
+          perp.add(s.baseAsset.toUpperCase());
+        }
+      }
+    } catch(e) { console.warn('Perp fetch failed', url, e); }
+  }
+  return perp;
+}
+
+async function fetchCMCAlphaVolumes() {
+  const map = {};
+  try {
+    const d = await getJson(CMC_URL);
+    for (const p of (d.data?.marketPairs || [])) {
+      const sym = (p.baseSymbol || '').toUpperCase();
+      map[sym] = (map[sym] || 0) + (parseFloat(p.volumeUsd) || 0);
+    }
+  } catch(e) { console.warn('CMC fetch failed', e); }
+  return map;
+}
+
+async function listingAgeDays(alphaId) {
+  try {
+    const url = `${KLINES}?symbol=${alphaId}USDT&interval=1d&limit=1000`;
+    const d = await getJson(url);
+    const klines = d.data || d;
+    if (!klines || !klines.length) return null;
+    const firstMs = parseInt(klines[0][0]);
+    const firstDay = new Date(firstMs);
+    const now = new Date();
+    return Math.floor((now - firstDay) / 86400000);
+  } catch(e) { return null; }
+}
+
+function fmt$(n) { return n ? '$' + parseFloat(n).toLocaleString('en-US', {maximumFractionDigits:0}) : '—'; }
+function fmtPrice(n) { return parseFloat(n).toPrecision(4); }
+
+function buildTable(rows, cols) {
+  const ths = cols.map(c => `<th>${c}</th>`).join('');
+  const trs = rows.map(row => {
+    const tds = cols.map(c => {
+      const v = row[c] ?? '—';
+      if (c === '代币') return `<td class="sym">${v}</td>`;
+      if (c === '排名') return `<td class="rank">${v}</td>`;
+      if (c === '名称' || c === '合约地址') return `<td class="mono">${v}</td>`;
+      if (c === '上线天数') return `<td class="num dim">${v !== null && v !== undefined ? v : '—'}</td>`;
+      return `<td class="num">${v}</td>`;
+    }).join('');
+    return `<tr>${tds}</tr>`;
+  }).join('');
+  return `<table class="ol-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
+}
+
+function toCSV(rows) {
+  if (!rows.length) return '';
+  const keys = Object.keys(rows[0]);
+  const lines = [keys.join(','), ...rows.map(r => keys.map(k => `"${String(r[k] ?? '').replace(/"/g,'""')}"`).join(','))];
+  return '﻿' + lines.join('\n');
+}
+
+function makeDlBtn(elId, rows, filename) {
+  const csv = toCSV(rows);
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  $(elId).href = url;
+  $(elId).download = filename;
+}
+
+function show(...ids) { ids.forEach(id => $(id).classList.remove('hidden')); }
+
+async function runScreener() {
+  const fdvMin = parseFloat($('fdvMin').value);
+  const fdvMax = parseFloat($('fdvMax').value);
+  const sleepMs = parseInt($('sleepMs').value) || 250;
+
+  $('runBtn').disabled = true;
+  $('idleMsg').classList.add('hidden');
+  ['sec1','div1','sec2','div2','sec3'].forEach(id => $(id).classList.add('hidden'));
+  show('progressWrap');
+
+  setProgress(2, '正在拉取 Alpha 代币列表...');
+
+  let tokens, perp, cmcVols;
+  try {
+    tokens = await fetchTokens();
+  } catch(e) {
+    setProgress(0, '❌ 拉取 Alpha 列表失败: ' + e.message);
+    $('runBtn').disabled = false; return;
+  }
+
+  const totalAlpha = tokens.length;
+  const tMap = {};
+  tokens.forEach(t => { tMap[t.symbol] = t; });
+
+  setProgress(5, `共 ${totalAlpha} 个 Alpha 代币，拉取 CMC Alpha 交易量...`);
+  cmcVols = await fetchCMCAlphaVolumes();
+
+  setProgress(10, '拉取永续合约列表...');
+  perp = await fetchPerpAssets();
+
+  // Build no-perp vol list
+  const noPerp = tokens.filter(t => !perp.has(t.symbol.toUpperCase()));
+  const noPerpSet = new Set(noPerp.map(t => t.symbol.toUpperCase()));
+  const noPerpVols = noPerp.map(t => [t.symbol, parseFloat(t.volume24h) || 0])
+    .sort((a, b) => b[1] - a[1]);
+  const noPerpTotal = noPerpVols.length;
+  const volRankMap = {};
+  noPerpVols.forEach(([sym], i) => volRankMap[sym] = i + 1);
+
+  // ── Top 20 DEX Vol ──
+  const top20 = [];
+  for (let i = 0; i < Math.min(20, noPerpVols.length); i++) {
+    const [sym, vol] = noPerpVols[i];
+    const t = tMap[sym] || {};
+    const pct = 10 + (i / 20) * 20;
+    setProgress(pct, `查询上线时间 (Top20-DEX): ${sym} (${i+1}/20)`);
+    const age = await listingAgeDays(t.alphaId || '');
+    await sleep(sleepMs);
+    top20.push({
+      排名: i + 1, 代币: sym, 名称: t.name || '',
+      上线天数: age ?? '—',
+      '24h 成交量 (全网)': fmt$(vol),
+      'Alpha 界面量 (CMC)': fmt$(cmcVols[sym.toUpperCase()] || 0),
+      '价格 (USDT)': fmtPrice(t.price || 0),
+      '市值 (MarketCap)': fmt$(t.marketCap || 0),
+      FDV: fmt$(t.fdv || 0),
+      合约地址: t.contractAddress || '',
+      _dex_vol: vol,
+      _cmc_vol: cmcVols[sym.toUpperCase()] || 0,
+    });
+  }
+
+  const COLS20 = ['排名','代币','名称','上线天数','24h 成交量 (全网)','Alpha 界面量 (CMC)','价格 (USDT)','市值 (MarketCap)','FDV','合约地址'];
+  $('table1').innerHTML = buildTable(top20, COLS20);
+  $('sec1Cap').textContent = `共 ${totalAlpha} 个 Alpha 代币 · 其中 ${noPerpTotal} 个未上永续合约`;
+  makeDlBtn('dl1', top20.map(r => { const x={...r}; delete x._dex_vol; delete x._cmc_vol; return x; }), `alpha_top20_dex_${today()}.csv`);
+  show('sec1', 'div1');
+
+  // ── Top 20 CMC Vol ──
+  setProgress(35, '构建 CMC Alpha 交易量排名...');
+  const cmcRanked = Object.entries(cmcVols)
+    .filter(([sym]) => noPerpSet.has(sym))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20);
+
+  const top20cmc = [];
+  for (let i = 0; i < cmcRanked.length; i++) {
+    const [sym, cmcVol] = cmcRanked[i];
+    const t = tMap[sym] || {};
+    const pct = 35 + (i / 20) * 20;
+    setProgress(pct, `查询上线时间 (Top20-CMC): ${sym} (${i+1}/20)`);
+    const age = await listingAgeDays(t.alphaId || '');
+    await sleep(sleepMs);
+    const dexVol = parseFloat(t.volume24h) || 0;
+    top20cmc.push({
+      排名: i + 1, 代币: sym, 名称: t.name || '',
+      上线天数: age ?? '—',
+      'Alpha 界面量 (CMC)': fmt$(cmcVol),
+      '24h 成交量 (全网)': fmt$(dexVol),
+      '价格 (USDT)': fmtPrice(t.price || 0),
+      '市值 (MarketCap)': fmt$(t.marketCap || 0),
+      FDV: fmt$(t.fdv || 0),
+      合约地址: t.contractAddress || '',
+    });
+  }
+
+  $('table2').innerHTML = buildTable(top20cmc, ['排名','代币','名称','上线天数','Alpha 界面量 (CMC)','24h 成交量 (全网)','价格 (USDT)','市值 (MarketCap)','FDV','合约地址']);
+  makeDlBtn('dl2', top20cmc, `alpha_top20_cmc_${today()}.csv`);
+  show('sec2', 'div2');
+
+  // ── FDV Screener ──
+  setProgress(60, 'FDV 筛选中...');
+  let perpExcluded = 0, fdvExcluded = 0;
+  const stage1 = [];
+  for (const t of tokens) {
+    const fdv = parseFloat(t.fdv) || 0;
+    if (perp.has(t.symbol.toUpperCase())) { perpExcluded++; continue; }
+    if (fdv < fdvMin || fdv > fdvMax) { fdvExcluded++; continue; }
+    stage1.push(t);
+  }
+
+  const results = [];
+  let ageNone = 0;
+  for (let i = 0; i < stage1.length; i++) {
+    const t = stage1[i];
+    const pct = 60 + (i / Math.max(stage1.length, 1)) * 38;
+    setProgress(pct, `查询上线时间: ${t.symbol} (${i+1}/${stage1.length})`);
+    const age = await listingAgeDays(t.alphaId || '');
+    await sleep(sleepMs);
+    if (age === null) ageNone++;
+    const sym = t.symbol;
+    results.push({
+      代币: sym, 名称: t.name || '',
+      '价格 (USDT)': fmtPrice(t.price || 0),
+      '24h 成交量': fmt$(t.volume24h || 0),
+      [`量排名 / 未上合约`]: `${volRankMap[sym] ?? '?'} / ${noPerpTotal}`,
+      FDV: fmt$(t.fdv || 0),
+      '流通市值': fmt$(t.marketCap || 0),
+      上线天数: age ?? '查询失败',
+      合约地址: t.contractAddress || '',
+    });
+  }
+  results.sort((a, b) => {
+    const x = typeof a.上线天数 === 'number' ? a.上线天数 : 99999;
+    const y = typeof b.上线天数 === 'number' ? b.上线天数 : 99999;
+    return x - y;
+  });
+
+  // Metrics
+  $('metrics').innerHTML = [
+    ['Alpha 总数', totalAlpha],
+    ['已上永续合约（排除）', `−${perpExcluded}`],
+    ['FDV 不符合（排除）', `−${fdvExcluded}`],
+    ['符合条件', results.length],
+  ].map(([l, v]) => `<div class="metric"><div class="metric-label">${l}</div><div class="metric-value">${v}</div></div>`).join('');
+
+  $('table3').innerHTML = results.length
+    ? buildTable(results, ['代币','名称','价格 (USDT)','24h 成交量','量排名 / 未上合约','FDV','流通市值','上线天数','合约地址'])
+    : `<div class="warn">没有找到符合条件的代币，可以尝试放宽 FDV 范围。</div>`;
+  makeDlBtn('dl3', results, `alpha_screened_${today()}.csv`);
+  show('sec3');
+
+  setProgress(100, '完成');
+  setTimeout(() => $('progressWrap').classList.add('hidden'), 1200);
+
+  const now = new Date();
+  $('subtitle').textContent = `未上永续合约 · FDV 筛选 · ${now.toLocaleString('zh-CN')} 更新`;
+  $('footerTime').textContent = now.toLocaleString('zh-CN');
+
+  $('runBtn').disabled = false;
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+</script>
+</body>
+</html>
