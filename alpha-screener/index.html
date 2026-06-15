@@ -388,7 +388,9 @@ const TOKEN_LIST = 'https://www.binance.com/bapi/defi/v1/public/wallet-direct/bu
 const KLINES    = 'https://www.binance.com/bapi/defi/v1/public/alpha-trade/klines';
 const FAPI      = 'https://fapi.binance.com/fapi/v1/exchangeInfo';
 const DAPI      = 'https://dapi.binance.com/dapi/v1/exchangeInfo';
-const CMC_URL   = 'https://api.coinmarketcap.com/data-api/v3/exchange/market-pairs/latest?slug=binance-alpha&category=spot&limit=750';
+const CMC_DIRECT = 'https://api.coinmarketcap.com/data-api/v3/exchange/market-pairs/latest?slug=binance-alpha&category=spot&limit=750';
+// CORS proxy fallback for browser environments
+const CMC_URL = 'https://corsproxy.io/?' + encodeURIComponent(CMC_DIRECT);
 
 const $ = id => document.getElementById(id);
 
