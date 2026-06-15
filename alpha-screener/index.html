@@ -510,7 +510,12 @@ async function runScreener() {
 
   const totalAlpha = tokens.length;
   const tMap = {};
-  tokens.forEach(t => { tMap[t.symbol] = t; });
+  const tMapUpper = {};
+  tokens.forEach(t => {
+    tMap[t.symbol] = t;
+    tMapUpper[t.symbol.toUpperCase()] = t;
+  });
+  const getToken = sym => tMap[sym] || tMapUpper[sym.toUpperCase()] || {};
 
   setProgress(5, `共 ${totalAlpha} 个 Alpha 代币，拉取 CMC Alpha 交易量...`);
   cmcVols = await fetchCMCAlphaVolumes();
@@ -531,7 +536,7 @@ async function runScreener() {
   const top20 = [];
   for (let i = 0; i < Math.min(20, noPerpVols.length); i++) {
     const [sym, vol] = noPerpVols[i];
-    const t = tMap[sym] || {};
+    const t = getToken(sym);
     const pct = 10 + (i / 20) * 20;
     setProgress(pct, `查询上线时间 (Top20-DEX): ${sym} (${i+1}/20)`);
     const age = await listingAgeDays(t.alphaId || '');
@@ -566,7 +571,7 @@ async function runScreener() {
   const top20cmc = [];
   for (let i = 0; i < cmcRanked.length; i++) {
     const [sym, cmcVol] = cmcRanked[i];
-    const t = tMap[sym] || {};
+    const t = getToken(sym);
     const pct = 35 + (i / 20) * 20;
     setProgress(pct, `查询上线时间 (Top20-CMC): ${sym} (${i+1}/20)`);
     const age = await listingAgeDays(t.alphaId || '');
