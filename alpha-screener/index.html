@@ -417,17 +417,19 @@ const STATIC_PERP = new Set(["0G","1000000BOB","1000000MOG","1000BONK","1000CAT"
 
 async function fetchPerpAssets() {
   const perp = new Set(STATIC_PERP);
+  let liveOk = false;
   for (const url of [FAPI, DAPI]) {
     try {
       const d = await getJson(url);
       for (const s of (d.symbols || [])) {
         if (s.contractType === 'PERPETUAL' && ['TRADING','PENDING_TRADING'].includes(s.status)) {
           perp.add(s.baseAsset.toUpperCase());
+          liveOk = true;
         }
       }
     } catch(e) { console.warn('Perp fetch failed, using static list:', url, e); }
   }
-  return perp;
+  return { perp, liveOk };
 }
 
 async function fetchCMCAlphaVolumes() {
@@ -524,8 +526,8 @@ async function runScreener() {
   cmcVols = await fetchCMCAlphaVolumes();
 
   setProgress(10, '拉取永续合约列表...');
-  perp = await fetchPerpAssets();
-  setProgress(12, `已加载永续合约列表（${perp.size} 个合约）`);
+  const { perp, liveOk } = await fetchPerpAssets();
+  setProgress(12, `已加载永续合约列表（${perp.size} 个合约，来源：${liveOk ? 'fapi 实时' : '静态列表'}）`);
 
   // Build no-perp vol list
   const noPerp = tokens.filter(t => !perp.has(t.symbol.toUpperCase()));
@@ -641,6 +643,7 @@ async function runScreener() {
     ['已上永续合约（排除）', `−${perpExcluded}`],
     ['FDV 不符合（排除）', `−${fdvExcluded}`],
     ['符合条件', results.length],
+    ['合约数据来源', liveOk ? `fapi 实时 (${perp.size})` : `静态列表 (${perp.size})`],
   ].map(([l, v]) => `<div class="metric"><div class="metric-label">${l}</div><div class="metric-value">${v}</div></div>`).join('');
 
   $('table3').innerHTML = results.length
