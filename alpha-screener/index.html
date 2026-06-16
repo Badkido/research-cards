@@ -505,7 +505,7 @@ async function runScreener() {
 
   setProgress(2, '正在拉取 Alpha 代币列表...');
 
-  let tokens, perp, cmcVols;
+  let tokens, cmcVols;
   try {
     tokens = await fetchTokens();
   } catch(e) {
