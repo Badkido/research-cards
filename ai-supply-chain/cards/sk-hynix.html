@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK Hynix — AI Supply Chain Card 01 · Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --accent-warm: #a83d20;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+  --good: #4a6b45;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Fraunces', Georgia, serif;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138, 106, 31, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 120%, rgba(168, 61, 32, 0.04), transparent 60%);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.dossier {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
+}
+
+.dossier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.dossier > * { position: relative; z-index: 2; }
+
+.nav-back {
+  padding: 12px 48px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.nav-back a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.nav-back a:hover { color: var(--accent); }
+
+.head {
+  padding: 32px 48px 24px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5.5vw, 58px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.head-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-align: right;
+  line-height: 1.9;
+  white-space: nowrap;
+}
+
+.head-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.tagline-section {
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+section {
+  padding: 36px 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .cn { color: var(--ink); }
+.section-title .en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.prose {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.75;
+}
+
+.prose strong { color: var(--ink); font-weight: 600; }
+
+.product-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.product-list li {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.product-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.product-list li strong { color: var(--ink); font-weight: 600; }
+
+/* tables */
+.fin-grid {
+  display: grid;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border: 1px solid var(--rule);
+  overflow-x: auto;
+}
+
+.fin-grid > div {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.fin-head {
+  background: rgba(138, 106, 31, 0.06);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.fin-label { color: var(--ink-muted); font-size: 12px; }
+.fin-num { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fin-num.hi { color: var(--accent); font-weight: 700; }
+.fin-num.good { color: var(--good); }
+.fin-num.bad { color: var(--bad); }
+.fin-subhead {
+  background: rgba(26, 24, 20, 0.03);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+/* 6-column table */
+.grid-6 { grid-template-columns: 1.8fr 1fr 0.7fr 1fr 0.7fr 0.7fr; }
+.grid-6 > div:nth-child(6n) { border-right: none; }
+.grid-6 > div:nth-last-child(-n+6) { border-bottom: none; }
+
+/* 5-column table */
+.grid-5 { grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; }
+.grid-5 > div:nth-child(5n) { border-right: none; }
+.grid-5 > div:nth-last-child(-n+5) { border-bottom: none; }
+
+.table-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* investment points */
+.points {
+  display: grid;
+  gap: 0;
+  counter-reset: pt;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: pt;
+}
+
+.point:first-child { border-top: none; padding-top: 0; }
+
+.point::before {
+  content: counter(pt, decimal-leading-zero);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+.point-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.point-body {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.point-body strong { color: var(--ink); font-weight: 600; }
+
+.point-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(138, 106, 31, 0.1);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+/* footer */
+.footer {
+  padding: 20px 48px;
+  background: rgba(138, 106, 31, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--rule);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footer-nav a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.footer-nav a:hover { color: var(--accent); }
+
+.footer-source {
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .nav-back, .head, section, .footer { padding-left: 24px; padding-right: 24px; }
+  .head { grid-template-columns: 1fr; }
+  .head-meta { text-align: left; }
+  .tagline-section { padding-left: 24px; padding-right: 24px; }
+  .grid-6 { grid-template-columns: 1.6fr 1fr 0.7fr; font-size: 11px; }
+  .grid-6 > div:nth-child(6n) { border-right: 1px solid var(--rule); }
+  .grid-6 > div:nth-child(3n) { border-right: none; }
+  .grid-6 > div:nth-last-child(-n+6) { border-bottom: 1px solid var(--rule); }
+  .grid-6 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .grid-5 { grid-template-columns: 1.4fr 1fr 1fr; font-size: 11px; }
+  .grid-5 > div:nth-child(5n) { border-right: 1px solid var(--rule); }
+  .grid-5 > div:nth-child(3n) { border-right: none; }
+  .grid-5 > div:nth-last-child(-n+5) { border-bottom: 1px solid var(--rule); }
+  .grid-5 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .point { grid-template-columns: 40px 1fr; gap: 14px; }
+  .point::before { font-size: 28px; }
+  .footer-nav { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<article class="dossier">
+
+  <div class="nav-back"><a href="../index.html">← 回到 AI Supply Chain · Series 02</a></div>
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">AI Supply Chain · Series 02 · Card 01</div>
+      <h1 class="title">SK Hynix<em> / 000660.KS</em></h1>
+    </div>
+    <div class="head-meta" id="head-meta">
+      数据截止 <strong>—</strong><br>
+      市值 <strong>—</strong><br>
+      PE TTM <strong>—</strong> &nbsp; PE Fwd <strong>—</strong><br>
+      作者 <strong>Danny</strong> · Orthogonal Labs
+    </div>
+  </header>
+
+  <div class="tagline-section">纯度最高的 HBM 龙头,已被充分定价。</div>
+
+  <!-- § 01 公司概览 -->
+  <section>
+    <div class="section-num">§ 01</div>
+    <h2 class="section-title">
+      <span class="cn">公司概览</span>
+      <span class="en">Company Overview</span>
+    </h2>
+    <p class="prose">韩国第二大综合存储厂,<strong>DRAM 全球 #2、HBM 全球 #1</strong>。2021 年收购英特尔 NAND 业务(现 Solidigm),是 Nvidia HBM 主供应商。</p>
+  </section>
+
+  <!-- § 02 产品线 -->
+  <section>
+    <div class="section-num">§ 02</div>
+    <h2 class="section-title">
+      <span class="cn">产品线</span>
+      <span class="en">Product Lines</span>
+    </h2>
+    <ul class="product-list">
+      <li><strong>HBM</strong>:核心增长引擎,Q1 2026 占 DRAM 收入约 12%(从 6% 跳升),全球 bit 份额约 50–60%</li>
+      <li><strong>标准 DRAM(DDR5/DDR4)</strong>:服务器、PC、手机</li>
+      <li><strong>NAND Flash(含 Solidigm)</strong>:企业级 SSD 是亮点</li>
+    </ul>
+  </section>
+
+  <!-- § 03 财务概览 -->
+  <section>
+    <div class="section-num">§ 03</div>
+    <h2 class="section-title">
+      <span class="cn">财务概览</span>
+      <span class="en">Financials · KRW → USD @ ₩1,388</span>
+    </h2>
+
+    <div class="fin-grid grid-6">
+      <div class="fin-head">科目</div>
+      <div class="fin-head">2025 全年</div>
+      <div class="fin-head">YoY</div>
+      <div class="fin-head">2026 Q1</div>
+      <div class="fin-head">YoY</div>
+      <div class="fin-head">QoQ</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">利润表</div>
+
+      <div class="fin-label">营收</div>
+      <div class="fin-num hi">$70.0B</div>
+      <div class="fin-num good">+47%</div>
+      <div class="fin-num hi">$37.9B</div>
+      <div class="fin-num good">+198%</div>
+      <div class="fin-num good">+60%</div>
+
+      <div class="fin-label">毛利率</div>
+      <div class="fin-num">~57%</div>
+      <div class="fin-num good">+22pp</div>
+      <div class="fin-num hi">79%</div>
+      <div class="fin-num good">+~40pp</div>
+      <div class="fin-num good">+~19pp</div>
+
+      <div class="fin-label">营业利润率</div>
+      <div class="fin-num">49%</div>
+      <div class="fin-num good">+18pp</div>
+      <div class="fin-num hi">72%</div>
+      <div class="fin-num good">+~48pp</div>
+      <div class="fin-num good">+14pp</div>
+
+      <div class="fin-label">EBITDA</div>
+      <div class="fin-num">~$50B</div>
+      <div class="fin-num good">~+90%</div>
+      <div class="fin-num hi">$29.8B</div>
+      <div class="fin-num good">~+300%</div>
+      <div class="fin-num good">~+80%</div>
+
+      <div class="fin-label">净利润率</div>
+      <div class="fin-num">44%</div>
+      <div class="fin-num good">+~18pp</div>
+      <div class="fin-num hi">77%</div>
+      <div class="fin-num good">+~52pp</div>
+      <div class="fin-num good">+~30pp</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">资产负债表</div>
+
+      <div class="fin-label">固定资产 PP&amp;E</div>
+      <div class="fin-num">~$50B+</div>
+      <div class="fin-num">高单位+%</div>
+      <div class="fin-num">持续提升</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">有息债务</div>
+      <div class="fin-num">$16.0B</div>
+      <div class="fin-num">持平</div>
+      <div class="fin-num good">$13.9B</div>
+      <div class="fin-num good">大降</div>
+      <div class="fin-num good">-13%</div>
+
+      <div class="fin-label">负债率</div>
+      <div class="fin-num">~32%</div>
+      <div class="fin-num good">改善</div>
+      <div class="fin-num">~33%</div>
+      <div class="fin-num good">改善</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">现金流量表</div>
+
+      <div class="fin-label">经营现金流</div>
+      <div class="fin-num">~$35B 级</div>
+      <div class="fin-num good">高速增长</div>
+      <div class="fin-num good">强劲</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">资本开支 Capex</div>
+      <div class="fin-num bad">$19.8B</div>
+      <div class="fin-num bad">+73%</div>
+      <div class="fin-num bad">大幅高位</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">自由现金流</div>
+      <div class="fin-num good">$14.1B</div>
+      <div class="fin-num">TTM 至 9月</div>
+      <div class="fin-num good">正</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+    </div>
+  </section>
+
+  <!-- § 04 核心业务指标 -->
+  <section>
+    <div class="section-num">§ 04</div>
+    <h2 class="section-title">
+      <span class="cn">核心业务指标</span>
+      <span class="en">Operating KPIs · Past 4 Quarters</span>
+    </h2>
+
+    <div class="fin-grid grid-5">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">2025 Q2</div>
+      <div class="fin-head">2025 Q3</div>
+      <div class="fin-head">2025 Q4</div>
+      <div class="fin-head">2026 Q1</div>
+
+      <div class="fin-label">HBM 全球 bit 份额</div>
+      <div class="fin-num hi">~62%</div>
+      <div class="fin-num hi">~57%</div>
+      <div class="fin-num">~50%级</div>
+      <div class="fin-num hi">50–60%</div>
+
+      <div class="fin-label">HBM 占 DRAM 收入</div>
+      <div class="fin-num">个位数</div>
+      <div class="fin-num">个位数↑</div>
+      <div class="fin-num">~6%</div>
+      <div class="fin-num hi">~12%</div>
+
+      <div class="fin-label">DRAM ASP 环比</div>
+      <div class="fin-num">低个位+</div>
+      <div class="fin-num good">中个位+</div>
+      <div class="fin-num good">+mid-20%</div>
+      <div class="fin-num hi">+mid-60%</div>
+
+      <div class="fin-label">DRAM bit 出货环比</div>
+      <div class="fin-num good">超目标</div>
+      <div class="fin-num good">高单位+</div>
+      <div class="fin-num">低个位+</div>
+      <div class="fin-num">持平偏正</div>
+
+      <div class="fin-label">NAND ASP 环比</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num good">中teen%</div>
+      <div class="fin-num good">高单位+</div>
+      <div class="fin-num hi">+mid-70%</div>
+
+      <div class="fin-label">HBM4 状态</div>
+      <div class="fin-num">设计中</div>
+      <div class="fin-num">出样客户</div>
+      <div class="fin-num good">Q4 出货启动</div>
+      <div class="fin-num hi">12-high 量产爬坡</div>
+    </div>
+  </section>
+
+  <!-- § 05 核心关注点 -->
+  <section>
+    <div class="section-num">§ 05</div>
+    <h2 class="section-title">
+      <span class="cn">核心关注点</span>
+      <span class="en">5 Things to Track</span>
+    </h2>
+
+    <div class="points">
+      <div class="point">
+        <div>
+          <div class="point-title">HBM4 在 Rubin 上的最终份额</div>
+          <div class="point-body">守住 <code>~50%</code> = 护城河验证;被 Samsung 切走则触发重定价。<strong>一次性事件,2026 内落定。</strong>这是本卡最高优先级的追踪变量。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">HBM 占 DRAM 收入比重的持续上升</div>
+          <div class="point-body">这个数字<strong>停止上升就是 AI 纯度叙事见顶的信号</strong>。当前从 6% 跳至 12%,方向正确,但幅度需持续验证。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">DRAM ASP 环比方向</div>
+          <div class="point-body"><strong>supercycle 总开关。</strong>转跌时其余都不用看。Q1 2026 的 +mid-60% 是极强信号,需观察是否能延续至下季。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">2027 新产能(M15X)投产时点与节奏</div>
+          <div class="point-body">投产正常 = 供给压力来临;延迟 = 利好但小概率。<strong>新产能是 supercycle 拐点的领先指标。</strong></div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">韩股可买性摩擦 + 集中度风险</div>
+          <div class="point-body">外资进出有汇率和额度摩擦;<strong>Nvidia 占其 HBM 出货约 90%</strong>,单一客户集中度极高——Nvidia 减单直接穿透。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-nav">
+      <span>SK HYNIX <span class="dot"></span> CARD 01 <span class="dot"></span> AI SUPPLY CHAIN · SERIES 02</span>
+      <span>
+        <a href="../index.html">← Index</a>
+        &nbsp;&nbsp;&nbsp;
+        NEXT: <a href="micron.html">Micron →</a>
+      </span>
+    </div>
+    <div class="footer-source">
+      数据来源:SK Hynix 公司 IR 公告 · 数据截至 2026 Q1 财报(2026/4/22 披露) · Orthogonal Labs 不构成投资建议
+    </div>
+  </footer>
+
+</article>
+
+<script>
+fetch('../data.json')
+  .then(r => r.json())
+  .then(data => {
+    const d = data.card_data['sk-hynix'];
+    document.getElementById('head-meta').innerHTML =
+      `数据截止 <strong>${d.data_as_of}</strong><br>` +
+      `市值 <strong>${d.market_cap}</strong><br>` +
+      `PE TTM <strong>${d.pe_ttm}</strong> &nbsp; PE Fwd <strong>${d.pe_fwd}</strong><br>` +
+      `作者 <strong>Danny</strong> · Orthogonal Labs`;
+  });
+</script>
+
+</body>
+</html>

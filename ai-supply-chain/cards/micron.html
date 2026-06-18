@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micron — AI Supply Chain Card 02 · Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --accent-warm: #a83d20;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+  --good: #4a6b45;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Fraunces', Georgia, serif;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138, 106, 31, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 120%, rgba(168, 61, 32, 0.04), transparent 60%);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.dossier {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
+}
+
+.dossier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.dossier > * { position: relative; z-index: 2; }
+
+.nav-back {
+  padding: 12px 48px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.nav-back a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.nav-back a:hover { color: var(--accent); }
+
+/* warning box */
+.warning-box {
+  margin: 24px 48px 0;
+  padding: 16px 20px;
+  background: rgba(168, 61, 32, 0.06);
+  border: 1px solid rgba(168, 61, 32, 0.28);
+  border-left: 3px solid var(--bad);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+.warning-box strong { color: var(--bad); font-weight: 600; }
+
+.head {
+  padding: 24px 48px 24px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5.5vw, 58px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.head-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-align: right;
+  line-height: 1.9;
+  white-space: nowrap;
+}
+
+.head-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.tagline-section {
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+section {
+  padding: 36px 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .cn { color: var(--ink); }
+.section-title .en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.prose {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.75;
+}
+
+.prose strong { color: var(--ink); font-weight: 600; }
+
+.product-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.product-list li {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.product-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.product-list li strong { color: var(--ink); font-weight: 600; }
+
+.fin-grid {
+  display: grid;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border: 1px solid var(--rule);
+}
+
+.fin-grid > div {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.fin-head {
+  background: rgba(138, 106, 31, 0.06);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.fin-label { color: var(--ink-muted); font-size: 12px; }
+.fin-num { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fin-num.hi { color: var(--accent); font-weight: 700; }
+.fin-num.good { color: var(--good); }
+.fin-num.bad { color: var(--bad); }
+.fin-subhead {
+  background: rgba(26, 24, 20, 0.03);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+.grid-6 { grid-template-columns: 1.8fr 1fr 0.7fr 1fr 0.7fr 0.7fr; }
+.grid-6 > div:nth-child(6n) { border-right: none; }
+.grid-6 > div:nth-last-child(-n+6) { border-bottom: none; }
+
+.grid-5 { grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; }
+.grid-5 > div:nth-child(5n) { border-right: none; }
+.grid-5 > div:nth-last-child(-n+5) { border-bottom: none; }
+
+.guidance-box {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(138, 106, 31, 0.06);
+  border-left: 2px solid var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+}
+
+.guidance-box strong { color: var(--accent); font-weight: 600; }
+
+.points {
+  display: grid;
+  gap: 0;
+  counter-reset: pt;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: pt;
+}
+
+.point:first-child { border-top: none; padding-top: 0; }
+
+.point::before {
+  content: counter(pt, decimal-leading-zero);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+.point-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.point-body {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.point-body strong { color: var(--ink); font-weight: 600; }
+
+.point-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(138, 106, 31, 0.1);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.footer {
+  padding: 20px 48px;
+  background: rgba(138, 106, 31, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--rule);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footer-nav a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.footer-nav a:hover { color: var(--accent); }
+
+.footer-source {
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .nav-back, .head, section, .footer, .warning-box, .tagline-section { padding-left: 24px; padding-right: 24px; }
+  .warning-box { margin-left: 24px; margin-right: 24px; }
+  .head { grid-template-columns: 1fr; }
+  .head-meta { text-align: left; }
+  .grid-6 { grid-template-columns: 1.6fr 1fr 0.7fr; font-size: 11px; }
+  .grid-6 > div:nth-child(6n) { border-right: 1px solid var(--rule); }
+  .grid-6 > div:nth-child(3n) { border-right: none; }
+  .grid-6 > div:nth-last-child(-n+6) { border-bottom: 1px solid var(--rule); }
+  .grid-6 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .grid-5 { grid-template-columns: 1.4fr 1fr 1fr; font-size: 11px; }
+  .grid-5 > div:nth-child(5n) { border-right: 1px solid var(--rule); }
+  .grid-5 > div:nth-child(3n) { border-right: none; }
+  .grid-5 > div:nth-last-child(-n+5) { border-bottom: 1px solid var(--rule); }
+  .grid-5 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .point { grid-template-columns: 40px 1fr; gap: 14px; }
+  .point::before { font-size: 28px; }
+  .footer-nav { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<article class="dossier">
+
+  <div class="nav-back"><a href="../index.html">← 回到 AI Supply Chain · Series 02</a></div>
+
+  <div class="warning-box">
+    ⚠ &nbsp;<strong>重要口径提醒</strong>:Micron 财年为 9 月–8 月,FY2025 大部分在 supercycle 起飞前。TTM PE ~32x 的虚高是分母含弱季度导致,与 SK Hynix 直接比 PE 会得出错误结论,必须用 forward 口径或同窗口年化。
+  </div>
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">AI Supply Chain · Series 02 · Card 02</div>
+      <h1 class="title">Micron<em> / MU · NASDAQ</em></h1>
+    </div>
+    <div class="head-meta" id="head-meta">
+      数据截止 <strong>—</strong><br>
+      市值 <strong>—</strong><br>
+      PE TTM <strong>—</strong> &nbsp; PE Fwd <strong>—</strong><br>
+      作者 <strong>Danny</strong> · Orthogonal Labs
+    </div>
+  </header>
+
+  <div class="tagline-section">低基数高弹性的转型故事,美股可买性最好。</div>
+
+  <!-- § 01 公司概览 -->
+  <section>
+    <div class="section-num">§ 01</div>
+    <h2 class="section-title">
+      <span class="cn">公司概览</span>
+      <span class="en">Company Overview</span>
+    </h2>
+    <p class="prose">美国唯一存储巨头,<strong>DRAM 全球 #3、HBM 全球 #3</strong>。2025 年 12 月宣布退出消费级存储,资源全力转向 AI 数据中心客户。</p>
+  </section>
+
+  <!-- § 02 产品线 -->
+  <section>
+    <div class="section-num">§ 02</div>
+    <h2 class="section-title">
+      <span class="cn">产品线</span>
+      <span class="en">Product Lines</span>
+    </h2>
+    <ul class="product-list">
+      <li><strong>HBM</strong>:核心转型故事,FQ2 2026 全年合约已 sold out,HBM4 12-high 量产出货</li>
+      <li><strong>数据中心 DRAM(DDR5)</strong>:FQ2 数据中心营收 $5.7B,业务单元营业利润率 67%</li>
+      <li><strong>移动/消费 DRAM</strong>:正在退出消费级</li>
+      <li><strong>NAND Flash(含数据中心 SSD)</strong></li>
+    </ul>
+  </section>
+
+  <!-- § 03 财务概览 -->
+  <section>
+    <div class="section-num">§ 03</div>
+    <h2 class="section-title">
+      <span class="cn">财务概览</span>
+      <span class="en">Financials · FY = Sep–Aug · USD</span>
+    </h2>
+
+    <div class="fin-grid grid-6">
+      <div class="fin-head">科目</div>
+      <div class="fin-head">FY2025 全年</div>
+      <div class="fin-head">YoY</div>
+      <div class="fin-head">FQ2 2026</div>
+      <div class="fin-head">YoY</div>
+      <div class="fin-head">QoQ</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">利润表</div>
+
+      <div class="fin-label">营收</div>
+      <div class="fin-num hi">$37.38B</div>
+      <div class="fin-num good">+49%</div>
+      <div class="fin-num hi">$23.86B</div>
+      <div class="fin-num good">+196%</div>
+      <div class="fin-num good">+75%</div>
+
+      <div class="fin-label">毛利率</div>
+      <div class="fin-num">~39%</div>
+      <div class="fin-num good">+19pp</div>
+      <div class="fin-num hi">74.4%</div>
+      <div class="fin-num good">+~38pp</div>
+      <div class="fin-num good">+~18pp</div>
+
+      <div class="fin-label">营业利润率 (non-GAAP)</div>
+      <div class="fin-num">~26%</div>
+      <div class="fin-num good">提升</div>
+      <div class="fin-num hi">69.0%</div>
+      <div class="fin-num good">+~44pp</div>
+      <div class="fin-num good">+22pp</div>
+
+      <div class="fin-label">EBITDA</div>
+      <div class="fin-num">~$13B 级</div>
+      <div class="fin-num good">+~80%</div>
+      <div class="fin-num hi">~$17B 量级</div>
+      <div class="fin-num good">+~470%</div>
+      <div class="fin-num good">+~80%</div>
+
+      <div class="fin-label">净利润率 (GAAP)</div>
+      <div class="fin-num">22.9%</div>
+      <div class="fin-num good">+20pp</div>
+      <div class="fin-num hi">57.8%</div>
+      <div class="fin-num good">+~38pp</div>
+      <div class="fin-num good">+~19pp</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">资产负债表 (2026/2/26 vs 2025/8/28)</div>
+
+      <div class="fin-label">应收账款</div>
+      <div class="fin-num">$9.3B</div>
+      <div class="fin-num">翻倍+</div>
+      <div class="fin-num hi">$17.3B</div>
+      <div class="fin-num good">+87%</div>
+      <div class="fin-num">大幅</div>
+
+      <div class="fin-label">固定资产 PP&amp;E</div>
+      <div class="fin-num">$46.6B</div>
+      <div class="fin-num">+大幅</div>
+      <div class="fin-num">$51.4B</div>
+      <div class="fin-num">+10%</div>
+      <div class="fin-num">+10%</div>
+
+      <div class="fin-label">有息债务</div>
+      <div class="fin-num">$14.6B</div>
+      <div class="fin-num good">偿还中</div>
+      <div class="fin-num good">$10.1B</div>
+      <div class="fin-num good">大降</div>
+      <div class="fin-num good">-31%</div>
+
+      <div class="fin-label">负债率</div>
+      <div class="fin-num">~35%</div>
+      <div class="fin-num good">改善</div>
+      <div class="fin-num good">~25%</div>
+      <div class="fin-num good">改善</div>
+      <div class="fin-num good">改善</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">现金流量表</div>
+
+      <div class="fin-label">经营现金流</div>
+      <div class="fin-num good">$17.53B</div>
+      <div class="fin-num good">+106%</div>
+      <div class="fin-num hi">$11.90B</div>
+      <div class="fin-num good">+201%</div>
+      <div class="fin-num good">+42%</div>
+
+      <div class="fin-label">资本开支 Capex</div>
+      <div class="fin-num bad">$15.86B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num bad">$5.0B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">自由现金流</div>
+      <div class="fin-num">~$1.7B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num hi">$6.9B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+    </div>
+
+    <div class="guidance-box">
+      <strong>下季指引</strong>:营收 $33.5B · 毛利率 ~81% · EPS $19.15
+    </div>
+  </section>
+
+  <!-- § 04 核心业务指标 -->
+  <section>
+    <div class="section-num">§ 04</div>
+    <h2 class="section-title">
+      <span class="cn">核心业务指标</span>
+      <span class="en">Operating KPIs · Past 4 Quarters</span>
+    </h2>
+
+    <div class="fin-grid grid-5">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">FQ3 2025 (5月)</div>
+      <div class="fin-head">FQ4 2025 (8月)</div>
+      <div class="fin-head">FQ1 2026 (11月)</div>
+      <div class="fin-head">FQ2 2026 (2月)</div>
+
+      <div class="fin-label">HBM 全球 bit 份额</div>
+      <div class="fin-num">~21%</div>
+      <div class="fin-num bad">~11%</div>
+      <div class="fin-num">~11%</div>
+      <div class="fin-num">低双位数</div>
+
+      <div class="fin-label">HBM 占 DRAM 收入</div>
+      <div class="fin-num">未单独披露</div>
+      <div class="fin-num">未单独披露</div>
+      <div class="fin-num">未单独披露</div>
+      <div class="fin-num">未披露(创新高)</div>
+
+      <div class="fin-label">DRAM ASP 环比</div>
+      <div class="fin-num bad">下行</div>
+      <div class="fin-num good">上行</div>
+      <div class="fin-num good">+~17%</div>
+      <div class="fin-num hi">+mid-60%</div>
+
+      <div class="fin-label">DRAM bit 出货环比</div>
+      <div class="fin-num good">大增</div>
+      <div class="fin-num">单位+</div>
+      <div class="fin-num bad">~-4%</div>
+      <div class="fin-num">单位+</div>
+
+      <div class="fin-label">数据中心营收</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num hi">创新高</div>
+      <div class="fin-num good">大增</div>
+      <div class="fin-num hi">$5.7B (+139%)</div>
+
+      <div class="fin-label">HBM4 状态</div>
+      <div class="fin-num">设计/送样</div>
+      <div class="fin-num">客户认证</div>
+      <div class="fin-num good">量产准备</div>
+      <div class="fin-num hi">12-high 量产出货</div>
+    </div>
+  </section>
+
+  <!-- § 05 核心关注点 -->
+  <section>
+    <div class="section-num">§ 05</div>
+    <h2 class="section-title">
+      <span class="cn">核心关注点</span>
+      <span class="en">5 Things to Track</span>
+    </h2>
+
+    <div class="points">
+      <div class="point">
+        <div>
+          <div class="point-title">HBM4 是否进入 Vera Rubin 旗舰 vs 仅限 Rubin CPX</div>
+          <div class="point-body">决定 Micron 拿到的是<strong>"价值密度最高的蛋糕"</strong>还是"次一档"。是 thesis 弹性的关键变量——旗舰份额意味着更高 ASP 和更强黏性。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">HBM 占 DRAM 收入比重(待披露)</div>
+          <div class="point-body">Micron 多头逻辑核心是<strong>"从周期股变 AI 内存股"</strong>,这个指标是验证转型最干净的信号。目前管理层仅称"创新高",尚未单独披露。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">2027 新产能(爱达荷 ID1、铜锣厂)投产进度</div>
+          <div class="point-body">决定 Micron 能否在下一阶段把 HBM 份额从 <code>~11%</code> 往上抬。<strong>低基数高弹性能否兑现的物理前提。</strong></div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">DRAM ASP 环比方向</div>
+          <div class="point-body"><strong>supercycle 总开关,</strong>同 SK Hynix。FQ2 的 +mid-60% 极强,下季指引毛利率 ~81% 意味着 ASP 继续向上。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">退出消费级存储的执行进度</div>
+          <div class="point-body">资源集中到数据中心是 Micron 转型故事的物理动作,不是 PPT。<strong>落地速度决定 AI 内存纯度提升的快慢。</strong>跟踪消费级营收占比的下降速率。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-nav">
+      <span>MICRON <span class="dot"></span> CARD 02 <span class="dot"></span> AI SUPPLY CHAIN · SERIES 02</span>
+      <span>
+        <a href="sk-hynix.html">← SK Hynix</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="../index.html">Index</a>
+        &nbsp;&nbsp;&nbsp;
+        NEXT: <a href="samsung.html">Samsung →</a>
+      </span>
+    </div>
+    <div class="footer-source">
+      数据来源:Micron Technology SEC 10-Q / 8-K · 数据截至 FQ2 FY2026 财报(2026/3/18 披露,数据截至 2026/2/26) · Orthogonal Labs 不构成投资建议
+    </div>
+  </footer>
+
+</article>
+
+<script>
+fetch('../data.json')
+  .then(r => r.json())
+  .then(data => {
+    const d = data.card_data['micron'];
+    document.getElementById('head-meta').innerHTML =
+      `数据截止 <strong>${d.data_as_of}</strong><br>` +
+      `市值 <strong>${d.market_cap}</strong><br>` +
+      `PE TTM <strong>${d.pe_ttm}</strong> &nbsp; PE Fwd <strong>${d.pe_fwd}</strong><br>` +
+      `作者 <strong>Danny</strong> · Orthogonal Labs`;
+  });
+</script>
+
+</body>
+</html>

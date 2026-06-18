@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samsung Electronics — AI Supply Chain Card 03 · Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --accent-warm: #a83d20;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+  --good: #4a6b45;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Fraunces', Georgia, serif;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138, 106, 31, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 120%, rgba(168, 61, 32, 0.04), transparent 60%);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.dossier {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
+}
+
+.dossier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.dossier > * { position: relative; z-index: 2; }
+
+.nav-back {
+  padding: 12px 48px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.nav-back a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.nav-back a:hover { color: var(--accent); }
+
+.head {
+  padding: 32px 48px 20px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 54px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.head-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-align: right;
+  line-height: 1.9;
+  white-space: nowrap;
+}
+
+.head-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.head-note {
+  grid-column: 1 / -1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  margin-top: 4px;
+}
+
+.tagline-section {
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+section {
+  padding: 36px 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .cn { color: var(--ink); }
+.section-title .en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.prose {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.75;
+}
+
+.prose strong { color: var(--ink); font-weight: 600; }
+
+.product-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.product-list li {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.product-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.product-list li strong { color: var(--ink); font-weight: 600; }
+
+.product-list li.sub {
+  padding-left: 36px;
+  font-size: 13px;
+}
+
+.product-list li.sub::before {
+  left: 16px;
+  color: var(--ink-dim);
+}
+
+.fin-grid {
+  display: grid;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border: 1px solid var(--rule);
+}
+
+.fin-grid > div {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.fin-head {
+  background: rgba(138, 106, 31, 0.06);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.fin-label { color: var(--ink-muted); font-size: 12px; }
+.fin-num { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fin-num.hi { color: var(--accent); font-weight: 700; }
+.fin-num.good { color: var(--good); }
+.fin-num.bad { color: var(--bad); }
+.fin-subhead {
+  background: rgba(26, 24, 20, 0.03);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+/* 7-column table */
+.grid-7 { grid-template-columns: 1.6fr 1fr 1fr 0.8fr 1fr 0.7fr 0.7fr; }
+.grid-7 > div:nth-child(7n) { border-right: none; }
+.grid-7 > div:nth-last-child(-n+7) { border-bottom: none; }
+
+/* 5-column table */
+.grid-5 { grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; }
+.grid-5 > div:nth-child(5n) { border-right: none; }
+.grid-5 > div:nth-last-child(-n+5) { border-bottom: none; }
+
+.table-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+  padding: 12px 14px;
+  background: rgba(26, 24, 20, 0.02);
+  border: 1px solid var(--rule-soft);
+}
+
+.points {
+  display: grid;
+  gap: 0;
+  counter-reset: pt;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: pt;
+}
+
+.point:first-child { border-top: none; padding-top: 0; }
+
+.point::before {
+  content: counter(pt, decimal-leading-zero);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+.point-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.point-body {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.point-body strong { color: var(--ink); font-weight: 600; }
+
+.point-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(138, 106, 31, 0.1);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.footer {
+  padding: 20px 48px;
+  background: rgba(138, 106, 31, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--rule);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footer-nav a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.footer-nav a:hover { color: var(--accent); }
+
+.footer-source {
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .nav-back, .head, section, .footer, .tagline-section { padding-left: 24px; padding-right: 24px; }
+  .head { grid-template-columns: 1fr; }
+  .head-meta { text-align: left; }
+  .grid-7 { grid-template-columns: 1.4fr 1fr 1fr; font-size: 10px; }
+  .grid-7 > div:nth-child(7n) { border-right: 1px solid var(--rule); }
+  .grid-7 > div:nth-child(3n) { border-right: none; }
+  .grid-7 > div:nth-last-child(-n+7) { border-bottom: 1px solid var(--rule); }
+  .grid-7 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .grid-5 { grid-template-columns: 1.4fr 1fr 1fr; font-size: 11px; }
+  .grid-5 > div:nth-child(5n) { border-right: 1px solid var(--rule); }
+  .grid-5 > div:nth-child(3n) { border-right: none; }
+  .grid-5 > div:nth-last-child(-n+5) { border-bottom: 1px solid var(--rule); }
+  .grid-5 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .point { grid-template-columns: 40px 1fr; gap: 14px; }
+  .point::before { font-size: 28px; }
+  .footer-nav { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<article class="dossier">
+
+  <div class="nav-back"><a href="../index.html">← 回到 AI Supply Chain · Series 02</a></div>
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">AI Supply Chain · Series 02 · Card 03</div>
+      <h1 class="title">Samsung<em> Electronics / 005930.KS</em></h1>
+    </div>
+    <div class="head-meta" id="head-meta">
+      数据截止 <strong>—</strong><br>
+      市值 <strong>—</strong><br>
+      PE TTM <strong>—</strong> &nbsp; PE Fwd <strong>—</strong><br>
+      作者 <strong>Danny</strong> · Orthogonal Labs
+    </div>
+    <div class="head-note">集团口径含手机 / 面板 / 代工 / Harman；HBM 部分无法单独估值。</div>
+  </header>
+
+  <div class="tagline-section">HBM 不可被单独定价的综合集团,纯押 AI 内存的最差载体——但 Q1 2026 DS 部门盈利已显示 HBM4 翻身势能。</div>
+
+  <!-- § 01 公司概览 -->
+  <section>
+    <div class="section-num">§ 01</div>
+    <h2 class="section-title">
+      <span class="cn">公司概览</span>
+      <span class="en">Company Overview</span>
+    </h2>
+    <p class="prose">韩国综合电子集团,半导体(DS 部门)只是其中一块。DS 部门内 <strong>DRAM 全球 #1、HBM 全球 #2</strong>,且自有先进逻辑代工——定制 HBM 时代唯一有结构性差异化的玩家。</p>
+  </section>
+
+  <!-- § 02 产品线 -->
+  <section>
+    <div class="section-num">§ 02</div>
+    <h2 class="section-title">
+      <span class="cn">产品线</span>
+      <span class="en">Product Lines</span>
+    </h2>
+    <ul class="product-list">
+      <li><strong>半导体(DS 部门)</strong> — AI 内存敞口在这里,但混在一起</li>
+      <li class="sub"><strong>存储(Memory)</strong>:DRAM、NAND、HBM</li>
+      <li class="sub"><strong>晶圆代工(Foundry)</strong></li>
+      <li class="sub"><strong>System LSI</strong></li>
+      <li><strong>显示面板(SDC)</strong>:OLED 等</li>
+      <li><strong>移动通信(MX) + 消费电子(VD)</strong>:手机、电视、家电</li>
+      <li><strong>Harman</strong>:车载电子</li>
+    </ul>
+  </section>
+
+  <!-- § 03 财务概览 -->
+  <section>
+    <div class="section-num">§ 03</div>
+    <h2 class="section-title">
+      <span class="cn">财务概览</span>
+      <span class="en">Financials · KRW → USD @ ₩1,388</span>
+    </h2>
+
+    <div class="fin-grid grid-7">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">2025 全年</div>
+      <div class="fin-head">YoY</div>
+      <div class="fin-head">2025 Q4</div>
+      <div class="fin-head">2026 Q1</div>
+      <div class="fin-head">QoQ</div>
+      <div class="fin-head">YoY</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">集团整体</div>
+
+      <div class="fin-label">集团营收</div>
+      <div class="fin-num">$240B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">$67.6B</div>
+      <div class="fin-num hi">$96.5B</div>
+      <div class="fin-num good">+43%</div>
+      <div class="fin-num good">+69%</div>
+
+      <div class="fin-label">集团营业利润</div>
+      <div class="fin-num">$31.4B</div>
+      <div class="fin-num good">+33%</div>
+      <div class="fin-num">$14.5B</div>
+      <div class="fin-num hi">$41.2B</div>
+      <div class="fin-num good">+185%</div>
+      <div class="fin-num good">+756%</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">DS 部门(半导体)</div>
+
+      <div class="fin-label">DS 营收</div>
+      <div class="fin-num">$93.7B</div>
+      <div class="fin-num good">+17%</div>
+      <div class="fin-num">$31.7B</div>
+      <div class="fin-num hi">$58.9B</div>
+      <div class="fin-num good">+86%</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">DS 营业利润</div>
+      <div class="fin-num">$17.9B</div>
+      <div class="fin-num good">+64.9%</div>
+      <div class="fin-num">$11.8B</div>
+      <div class="fin-num hi">$38.7B</div>
+      <div class="fin-num good">+227%</div>
+      <div class="fin-num good">+~50x</div>
+
+      <div class="fin-label">DS 营业利润率</div>
+      <div class="fin-num">19.1%</div>
+      <div class="fin-num good">+~5pp</div>
+      <div class="fin-num">37.3%</div>
+      <div class="fin-num hi">65.7%</div>
+      <div class="fin-num good">+~28pp</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">Memory 子业务收入</div>
+      <div class="fin-num">$75.0B</div>
+      <div class="fin-num good">+23%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num good">续创新高</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+    </div>
+
+    <div class="table-note">
+      注:DS 占集团营收约 39%,但 Q1 2026 占集团营业利润 ~94%。DS 部门只披露分部级营收和营业利润,无部门级毛利、EBITDA、资产负债表、现金流。
+    </div>
+  </section>
+
+  <!-- § 04 核心业务指标 -->
+  <section>
+    <div class="section-num">§ 04</div>
+    <h2 class="section-title">
+      <span class="cn">核心业务指标</span>
+      <span class="en">Operating KPIs · Past 4 Quarters</span>
+    </h2>
+
+    <div class="fin-grid grid-5">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">2025 Q2</div>
+      <div class="fin-head">2025 Q3</div>
+      <div class="fin-head">2025 Q4</div>
+      <div class="fin-head">2026 Q1</div>
+
+      <div class="fin-label">HBM 全球 bit 份额</div>
+      <div class="fin-num">~17%</div>
+      <div class="fin-num">~22–28%</div>
+      <div class="fin-num">维持</div>
+      <div class="fin-num good">续升(HBM4 出货)</div>
+
+      <div class="fin-label">DRAM 全球收入份额</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">~34.8%</div>
+      <div class="fin-num good">36%(重回 #1)</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">DRAM ASP 环比</div>
+      <div class="fin-num">微升</div>
+      <div class="fin-num good">上行</div>
+      <div class="fin-num good">+~40%</div>
+      <div class="fin-num hi">续升</div>
+
+      <div class="fin-label">DRAM bit 出货环比</div>
+      <div class="fin-num">微增</div>
+      <div class="fin-num good">增</div>
+      <div class="fin-num">低单位+</div>
+      <div class="fin-num">单位+</div>
+
+      <div class="fin-label">HBM4 状态</div>
+      <div class="fin-num">设计/送样</div>
+      <div class="fin-num">11Gb/s 认证中</div>
+      <div class="fin-num good">实质通过 Nvidia 认证</div>
+      <div class="fin-num hi">Q1 量产出货,产能售罄</div>
+    </div>
+  </section>
+
+  <!-- § 05 核心关注点 -->
+  <section>
+    <div class="section-num">§ 05</div>
+    <h2 class="section-title">
+      <span class="cn">核心关注点</span>
+      <span class="en">5 Things to Track</span>
+    </h2>
+
+    <div class="points">
+      <div class="point">
+        <div>
+          <div class="point-title">集团折价 = HBM 不能被单独定价</div>
+          <div class="point-body">想纯押 AI 内存,Samsung <strong>永远是最差载体</strong>。这是结构性的、不会通过分拆改变——管理层公开表态"一站式"是战略卖点。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">HBM4 在 Rubin 旗舰的实际份额</div>
+          <div class="point-body">Samsung 翻身的<strong>唯一支点</strong>。Q1 2026 DS 利润近 50 倍增长已显示势能,但还需 Rubin 份额数字落定。一旦确认旗舰份额,集团折价有收窄空间。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">"集团折价收窄"是潜在 alpha,但低锐度、慢变量</div>
+          <div class="point-body">DS 占集团营业利润已升至 <code>94%</code>(Q1 2026)。如果这个比例持续维持,集团折价收窄逻辑会被慢慢逼出来——<strong>机会存在但难抓</strong>,需要极大耐心。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">劳资风险</div>
+          <div class="point-body">工会大规模罢工事件曾对盈利预期造成 <strong>7–12% 下行冲击</strong>,这是 SK Hynix(已用利润分成锁定)没有的结构性风险。跟踪韩国半导体工会谈判进展。</div>
+        </div>
+      </div>
+
+      <div class="point">
+        <div>
+          <div class="point-title">自产 base die 战略的成色</div>
+          <div class="point-body">不依赖台积电的优势能否在定制 HBM 时代真正变现,是 Samsung <strong>相对 SK Hynix 的差异化叙事能否成立的关键</strong>。逻辑上是独特优势,但执行上尚未验证。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-nav">
+      <span>SAMSUNG <span class="dot"></span> CARD 03 <span class="dot"></span> AI SUPPLY CHAIN · SERIES 02</span>
+      <span>
+        <a href="micron.html">← Micron</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="../index.html">Index</a>
+        &nbsp;&nbsp;&nbsp;
+        NEXT: <a href="sk-hynix.html">SK Hynix →</a>
+      </span>
+    </div>
+    <div class="footer-source">
+      数据来源:Samsung Electronics 公司 IR 公告 · 数据截至 2026 Q1 财报(2026/4/30 披露) · Orthogonal Labs 不构成投资建议
+    </div>
+  </footer>
+
+</article>
+
+<script>
+fetch('../data.json')
+  .then(r => r.json())
+  .then(data => {
+    const d = data.card_data['samsung'];
+    document.getElementById('head-meta').innerHTML =
+      `数据截止 <strong>${d.data_as_of}</strong><br>` +
+      `市值 <strong>${d.market_cap}</strong><br>` +
+      `PE TTM <strong>${d.pe_ttm}</strong> &nbsp; PE Fwd <strong>${d.pe_fwd}</strong><br>` +
+      `作者 <strong>Danny</strong> · Orthogonal Labs`;
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "updated": "2026-06-17",
+    "author": "Danny",
+    "series": "02",
+    "series_title": "AI Supply Chain"
+  },
+  "sections": [
+    {
+      "id": "01",
+      "slug": "accelerators",
+      "title_en": "AI Accelerators",
+      "title_zh": "AI 加速器",
+      "tagline": "GPU + AI ASIC 算力核心 · Nvidia 当代主导 · ASIC 是结构性威胁",
+      "companies": [
+        {
+          "name": "Nvidia",
+          "ticker": "NVDA",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        },
+        {
+          "name": "AMD",
+          "ticker": "AMD",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "slug": "memory",
+      "title_en": "Memory / HBM",
+      "title_zh": "内存",
+      "tagline": "supercycle 中段 · 价驱动而非量驱动 · 看 HBM4 份额重分配",
+      "companies": [
+        {
+          "name": "SK Hynix",
+          "ticker": "000660.KS",
+          "exchange": "KOSPI",
+          "status": "done",
+          "card_path": "cards/sk-hynix.html",
+          "card_number": "01"
+        },
+        {
+          "name": "Micron",
+          "ticker": "MU",
+          "exchange": "NASDAQ",
+          "status": "done",
+          "card_path": "cards/micron.html",
+          "card_number": "02"
+        },
+        {
+          "name": "Samsung Electronics",
+          "ticker": "005930.KS",
+          "exchange": "KOSPI",
+          "status": "done",
+          "card_path": "cards/samsung.html",
+          "card_number": "03"
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "slug": "foundry",
+      "title_en": "Foundry",
+      "title_zh": "晶圆代工",
+      "tagline": "高端制程台积电独占 · Intel Foundry 仍在追赶",
+      "companies": [
+        {
+          "name": "TSMC",
+          "ticker": "TSM / 2330",
+          "exchange": "NYSE / TWSE",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        },
+        {
+          "name": "Intel Foundry",
+          "ticker": "INTC",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "slug": "custom-asic",
+      "title_en": "Custom ASIC",
+      "title_zh": "定制 ASIC",
+      "tagline": "Nvidia 通用 GPU 的结构性威胁 · 超大规模厂商自研芯片的载体",
+      "companies": [
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        },
+        {
+          "name": "Marvell",
+          "ticker": "MRVL",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        },
+        {
+          "name": "Arm",
+          "ticker": "ARM",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "slug": "equipment",
+      "title_en": "Semiconductor Equipment",
+      "title_zh": "半导体设备",
+      "tagline": "卡产业链上游瓶颈 · ASML 在 EUV 上独占 · 周期性强",
+      "companies": [
+        {
+          "name": "ASML",
+          "ticker": "ASML",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        },
+        {
+          "name": "Applied Materials",
+          "ticker": "AMAT",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        },
+        {
+          "name": "Lam Research",
+          "ticker": "LRCX",
+          "exchange": "NASDAQ",
+          "status": "todo",
+          "card_path": null,
+          "card_number": null
+        }
+      ]
+    }
+  ],
+  "card_data": {
+    "sk-hynix": {
+      "market_cap": "~$850B",
+      "pe_ttm": "17x",
+      "pe_fwd": "9x",
+      "data_as_of": "2026-06-17"
+    },
+    "micron": {
+      "market_cap": "~$450B",
+      "pe_ttm": "32x",
+      "pe_fwd": "13x",
+      "data_as_of": "2026-06-17"
+    },
+    "samsung": {
+      "market_cap": "~$380B(集团口径)",
+      "pe_ttm": "~16x(集团口径)",
+      "pe_fwd": "~12x(集团口径)",
+      "data_as_of": "2026-06-17"
+    }
+  }
+}

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Supply Chain — Research Cards Series 02 · Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+body {
+  padding: 64px 24px;
+  background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138,106,31,0.06), transparent 60%);
+}
+
+.wrap { max-width: 760px; margin: 0 auto; }
+
+/* ── header ── */
+.site-header { margin-bottom: 48px; }
+
+.brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.brand::before { content: ""; width: 20px; height: 1px; background: var(--accent); }
+
+.series-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 12px;
+}
+
+.site-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+  margin-bottom: 6px;
+}
+.site-title em { font-weight: 400; font-style: italic; color: var(--ink-muted); }
+
+.subtitle-zh {
+  font-size: 14px;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+
+.header-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 20px;
+}
+.header-meta strong { color: var(--ink); font-weight: 500; }
+
+.site-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.75; }
+
+/* ── section blocks ── */
+.section-block {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section-block:first-child { border-top: 1px solid var(--rule); }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.section-title-en {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.section-title-en em { font-style: italic; font-weight: 400; color: var(--ink-muted); }
+
+.section-title-zh {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+  margin-top: 2px;
+  line-height: 1.7;
+}
+
+/* ── company list ── */
+.company-list {
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.company-item {
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 13px 20px;
+  gap: 16px;
+}
+
+.company-item.is-live { cursor: pointer; transition: background 0.12s; }
+.company-item.is-live:hover { background: rgba(138,106,31,0.04); }
+
+.company-link { text-decoration: none; color: inherit; display: contents; }
+
+.company-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.company-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  margin-top: 3px;
+}
+
+.btn-card {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 2px;
+  white-space: nowrap;
+  text-decoration: none;
+  background: rgba(74,107,69,0.12);
+  color: #4a6b45;
+  border: 1px solid rgba(74,107,69,0.25);
+  transition: background 0.12s;
+}
+.btn-card:hover { background: rgba(74,107,69,0.22); }
+
+.btn-todo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: rgba(143,137,125,0.1);
+  color: var(--ink-dim);
+  border: 1px solid var(--rule);
+  cursor: not-allowed;
+  user-select: none;
+}
+
+/* ── footer ── */
+.site-footer {
+  margin-top: 64px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.footer-legal { font-size: 9px; color: var(--ink-dim); letter-spacing: 0.14em; }
+
+@media (max-width: 600px) {
+  body { padding: 32px 16px; }
+  .header-meta { gap: 14px; }
+  .site-title { font-size: 32px; }
+  .footer-nav { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <div class="brand">Orthogonal Labs · Research Cards</div>
+    <div class="series-tag">Series 02</div>
+    <h1 class="site-title">AI Supply <em>Chain</em></h1>
+    <div class="subtitle-zh">AI 产业链 / 投资地图</div>
+    <div class="header-meta">
+      <span>作者 <strong>Danny</strong></span>
+      <span>最后更新 <strong id="meta-updated">2026-06-17</strong></span>
+      <span>研究进度 <strong>3 / 13</strong></span>
+    </div>
+    <p class="site-desc">高密度投资备忘卡归档。本 series 覆盖 AI 产业链六大环节,逐家公司展开核心财务、业务指标、跟踪要点与信息空白。</p>
+  </header>
+
+  <!-- ════════════════════════════════════ SECTIONS ════════════════════════════════════ -->
+
+  <!-- § 01 AI Accelerators -->
+  <div class="section-block">
+    <div class="section-num">§ 01</div>
+    <div class="section-header">
+      <span class="section-title-en">AI <em>Accelerators</em></span>
+      <span class="section-title-zh">AI 加速器</span>
+    </div>
+    <div class="section-tagline">GPU + AI ASIC 算力核心 · Nvidia 当代主导 · ASIC 是结构性威胁</div>
+    <ul class="company-list">
+      <li class="company-item">
+        <div>
+          <div class="company-name">Nvidia</div>
+          <div class="company-sub">NVDA · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+      <li class="company-item">
+        <div>
+          <div class="company-name">AMD</div>
+          <div class="company-sub">AMD · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- § 02 Memory / HBM -->
+  <div class="section-block">
+    <div class="section-num">§ 02</div>
+    <div class="section-header">
+      <span class="section-title-en">Memory / <em>HBM</em></span>
+      <span class="section-title-zh">内存</span>
+    </div>
+    <div class="section-tagline">supercycle 中段 · 价驱动而非量驱动 · 看 HBM4 份额重分配</div>
+    <ul class="company-list">
+      <li class="company-item is-live">
+        <a class="company-link" href="cards/sk-hynix.html">
+          <div>
+            <div class="company-name">SK Hynix</div>
+            <div class="company-sub">000660.KS · KOSPI</div>
+          </div>
+          <a class="btn-card" href="cards/sk-hynix.html">Card 01 →</a>
+        </a>
+      </li>
+      <li class="company-item is-live">
+        <a class="company-link" href="cards/micron.html">
+          <div>
+            <div class="company-name">Micron</div>
+            <div class="company-sub">MU · NASDAQ</div>
+          </div>
+          <a class="btn-card" href="cards/micron.html">Card 02 →</a>
+        </a>
+      </li>
+      <li class="company-item is-live">
+        <a class="company-link" href="cards/samsung.html">
+          <div>
+            <div class="company-name">Samsung Electronics</div>
+            <div class="company-sub">005930.KS · KOSPI</div>
+          </div>
+          <a class="btn-card" href="cards/samsung.html">Card 03 →</a>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- § 03 Foundry -->
+  <div class="section-block">
+    <div class="section-num">§ 03</div>
+    <div class="section-header">
+      <span class="section-title-en"><em>Foundry</em></span>
+      <span class="section-title-zh">晶圆代工</span>
+    </div>
+    <div class="section-tagline">高端制程台积电独占 · Intel Foundry 仍在追赶</div>
+    <ul class="company-list">
+      <li class="company-item">
+        <div>
+          <div class="company-name">TSMC</div>
+          <div class="company-sub">TSM / 2330 · NYSE / TWSE</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+      <li class="company-item">
+        <div>
+          <div class="company-name">Intel Foundry</div>
+          <div class="company-sub">INTC · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- § 04 Custom ASIC -->
+  <div class="section-block">
+    <div class="section-num">§ 04</div>
+    <div class="section-header">
+      <span class="section-title-en">Custom <em>ASIC</em></span>
+      <span class="section-title-zh">定制 ASIC</span>
+    </div>
+    <div class="section-tagline">Nvidia 通用 GPU 的结构性威胁 · 超大规模厂商自研芯片的载体</div>
+    <ul class="company-list">
+      <li class="company-item">
+        <div>
+          <div class="company-name">Broadcom</div>
+          <div class="company-sub">AVGO · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+      <li class="company-item">
+        <div>
+          <div class="company-name">Marvell</div>
+          <div class="company-sub">MRVL · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+      <li class="company-item">
+        <div>
+          <div class="company-name">Arm</div>
+          <div class="company-sub">ARM · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- § 05 Semiconductor Equipment -->
+  <div class="section-block">
+    <div class="section-num">§ 05</div>
+    <div class="section-header">
+      <span class="section-title-en">Semiconductor <em>Equipment</em></span>
+      <span class="section-title-zh">半导体设备</span>
+    </div>
+    <div class="section-tagline">卡产业链上游瓶颈 · ASML 在 EUV 上独占 · 周期性强</div>
+    <ul class="company-list">
+      <li class="company-item">
+        <div>
+          <div class="company-name">ASML</div>
+          <div class="company-sub">ASML · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+      <li class="company-item">
+        <div>
+          <div class="company-name">Applied Materials</div>
+          <div class="company-sub">AMAT · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+      <li class="company-item">
+        <div>
+          <div class="company-name">Lam Research</div>
+          <div class="company-sub">LRCX · NASDAQ</div>
+        </div>
+        <span class="btn-todo">未完成</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════════════════ FOOTER ════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <span>AI SUPPLY CHAIN · SERIES 02 · ORTHOGONAL LABS</span>
+      <span>PREVIOUS: SPACEX (SERIES 01) &nbsp;&nbsp; NEXT: TBD</span>
+    </div>
+    <div class="footer-legal">Orthogonal Labs 不构成投资建议</div>
+  </footer>
+
+</div>
+
+<script>
+fetch('./data.json')
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('meta-updated').textContent = data.meta.updated;
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>
