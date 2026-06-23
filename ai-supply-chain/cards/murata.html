@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Murata — AI Supply Chain Card 04 · Orthogonal Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --surface: #fdfaf2;
+  --ink: #1a1814;
+  --ink-muted: #5c574d;
+  --ink-dim: #8f897d;
+  --accent: #8a6a1f;
+  --accent-warm: #a83d20;
+  --rule: #d9d2c2;
+  --rule-soft: #e8e2d1;
+  --good: #4a6b45;
+  --bad: #a83d20;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Fraunces', Georgia, serif;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(138, 106, 31, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 120%, rgba(168, 61, 32, 0.04), transparent 60%);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.dossier {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 1px 0 rgba(26, 24, 20, 0.04), 0 12px 40px rgba(26, 24, 20, 0.06);
+}
+
+.dossier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.dossier > * { position: relative; z-index: 2; }
+
+.nav-back {
+  padding: 12px 48px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.nav-back a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.nav-back a:hover { color: var(--accent); }
+
+.warning-box {
+  margin: 24px 48px 0;
+  padding: 16px 20px;
+  background: rgba(168, 61, 32, 0.06);
+  border: 1px solid rgba(168, 61, 32, 0.28);
+  border-left: 3px solid var(--bad);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+.warning-box strong { color: var(--bad); font-weight: 600; }
+
+.head {
+  padding: 24px 48px 24px;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5.5vw, 58px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.head-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-align: right;
+  line-height: 1.9;
+  white-space: nowrap;
+}
+
+.head-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.meta-note {
+  margin: 12px 48px 0;
+  padding: 10px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  line-height: 1.65;
+  border-left: 2px solid var(--rule);
+}
+
+.tagline-section {
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+section {
+  padding: 36px 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-child { border-bottom: none; }
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-title .cn { color: var(--ink); }
+.section-title .en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.prose {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.75;
+}
+
+.prose strong { color: var(--ink); font-weight: 600; }
+
+.product-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.product-list li {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.product-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.product-list li strong { color: var(--ink); font-weight: 600; }
+
+.fin-grid {
+  display: grid;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border: 1px solid var(--rule);
+}
+
+.fin-grid > div {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.fin-head {
+  background: rgba(138, 106, 31, 0.06);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.fin-label { color: var(--ink-muted); font-size: 12px; }
+.fin-num { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fin-num.hi { color: var(--accent); font-weight: 700; }
+.fin-num.good { color: var(--good); }
+.fin-num.bad { color: var(--bad); }
+.fin-subhead {
+  background: rgba(26, 24, 20, 0.03);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+.grid-6 { grid-template-columns: 1.8fr 1fr 0.7fr 1fr 0.7fr 0.7fr; }
+.grid-6 > div:nth-child(6n) { border-right: none; }
+.grid-6 > div:nth-last-child(-n+6) { border-bottom: none; }
+
+.grid-5 { grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; }
+.grid-5 > div:nth-child(5n) { border-right: none; }
+.grid-5 > div:nth-last-child(-n+5) { border-bottom: none; }
+
+.tbl-note {
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+}
+
+.mlcc-note {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: rgba(138, 106, 31, 0.05);
+  border-left: 2px solid var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+}
+
+.points {
+  display: grid;
+  gap: 0;
+  counter-reset: pt;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: pt;
+}
+
+.point:first-child { border-top: none; padding-top: 0; }
+
+.point::before {
+  content: counter(pt, decimal-leading-zero);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+.point-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+
+.point-body {
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.point-body strong { color: var(--ink); font-weight: 600; }
+
+.point-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(138, 106, 31, 0.1);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.footer {
+  padding: 20px 48px;
+  background: rgba(138, 106, 31, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--rule);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.footer-nav a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+
+.footer-nav a:hover { color: var(--accent); }
+
+.footer-source {
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .nav-back, .head, section, .footer, .warning-box, .tagline-section, .meta-note { padding-left: 24px; padding-right: 24px; }
+  .warning-box { margin-left: 24px; margin-right: 24px; }
+  .meta-note { margin-left: 24px; margin-right: 24px; }
+  .head { grid-template-columns: 1fr; }
+  .head-meta { text-align: left; }
+  .grid-6 { grid-template-columns: 1.6fr 1fr 0.7fr; font-size: 11px; }
+  .grid-6 > div:nth-child(6n) { border-right: 1px solid var(--rule); }
+  .grid-6 > div:nth-child(3n) { border-right: none; }
+  .grid-6 > div:nth-last-child(-n+6) { border-bottom: 1px solid var(--rule); }
+  .grid-6 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .grid-5 { grid-template-columns: 1.4fr 1fr 1fr; font-size: 11px; }
+  .grid-5 > div:nth-child(5n) { border-right: 1px solid var(--rule); }
+  .grid-5 > div:nth-child(3n) { border-right: none; }
+  .grid-5 > div:nth-last-child(-n+5) { border-bottom: 1px solid var(--rule); }
+  .grid-5 > div:nth-last-child(-n+3) { border-bottom: none; }
+  .point { grid-template-columns: 40px 1fr; gap: 14px; }
+  .point::before { font-size: 28px; }
+  .footer-nav { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<article class="dossier">
+
+  <div class="nav-back"><a href="../index.html">← 回到 AI Supply Chain · Series 02</a></div>
+
+  <div class="warning-box">
+    ⚠ &nbsp;<strong>重要口径提醒</strong>：村田财年截至 3 月底，与日历年错位。本卡"最新季度"为 Q4 FY2025（2026/1–3），村田不单独披露，系"全年−前 9 个月"倒算（已与官方季度表核对一致）。TTM PE ~96x：其中既有 Q3 一次性 ¥438 亿 SAW 商誉减值压低 EPS 的虚高（正常化后仍约 80x+），又叠加 6 月券商集中上调驱动的拉升，远超历史区间上沿（10–49.5x）。4 月 1 日起的 15–35% 提价不在任何已报季度内，需待 FY2027 Q1（2026/7 底）验证。
+  </div>
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">AI Supply Chain · Series 02 · Card 04</div>
+      <h1 class="title">Murata<em> / 6981 · TSE</em></h1>
+    </div>
+    <div class="head-meta" id="head-meta">
+      数据截止 <strong>—</strong><br>
+      市值 <strong>—</strong><br>
+      PE TTM <strong>—</strong> &nbsp; PE Fwd <strong>—</strong><br>
+      作者 <strong>Danny</strong> · Orthogonal Labs
+    </div>
+  </header>
+
+  <div class="meta-note">
+    合并口径。FY2025 集团营业利润 100% 以上来自 Components（营业利润率 26.8%）；Devices &amp; Modules 倒亏 $176M（−4.0%）。看村田须拆分部、不看合并数。
+  </div>
+
+  <div class="tagline-section">MLCC 绝对龙头，AI 超级周期核心标的；量已知、提价未证，估值已突破十年上沿（forward ~76x）。</div>
+
+  <!-- § 01 公司概览 -->
+  <section>
+    <div class="section-num">§ 01</div>
+    <h2 class="section-title">
+      <span class="cn">公司概览</span>
+      <span class="en">Company Overview</span>
+    </h2>
+    <p class="prose">全球被动元件龙头。<strong>MLCC 全球份额约 41%</strong>。AI 服务器 MLCC 是村田 + 三星电机的双寡头（合计约 84%，村田约 45%、三星约 39%），且当前只有村田能稳定量产旗舰规格（1608 尺寸 100µF、1005 尺寸 47µF 等）；车规 MLCC 占 40–50%、RF/微波近乎独占；SAW 滤波器份额 40–45%。核心护城河是从钛酸钡粉体合成到精密叠层烧成全链条 in-house 的垂直整合，粉体供应在日本本土。历史最大终端客户是 Apple（手机），增长引擎切向 AI 服务器与汽车。FY2025 末批准 ¥1,500 亿（4.12% 股本）回购并注销。</p>
+  </section>
+
+  <!-- § 02 产品线 -->
+  <section>
+    <div class="section-num">§ 02</div>
+    <h2 class="section-title">
+      <span class="cn">产品线</span>
+      <span class="en">Product Lines · FY2025 · @¥150.78</span>
+    </h2>
+    <ul class="product-list">
+      <li><strong>Components（电容/电感/EMI）</strong> — 收入 $7.69B（+12.3%），营业利润 $2.09B，利润率 26.8%。集团利润引擎。其中电容器（含 MLCC）$6.21B（+12.6%）、电感 &amp; EMI $1.48B（+11.0%）</li>
+      <li><strong>Devices &amp; Modules（SAW/树脂基板/电池/传感器）</strong> — 收入 $4.35B（−5.9%），营业利润 −$0.18B，利润率 −4.0%。¥438 亿减值发生地</li>
+      <li><strong>Others</strong> — 收入 $0.10B，营业利润 −$0.05B</li>
+    </ul>
+
+    <div style="margin-top: 24px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px;">MLCC 内部分层（估算，村田不披露按层收入）· MLCC ≈ $6.21B</div>
+      <div class="fin-grid" style="grid-template-columns: 1.4fr 0.7fr 0.9fr 1.8fr;">
+        <div class="fin-head">细分</div>
+        <div class="fin-head">占 MLCC</div>
+        <div class="fin-head">金额（估）</div>
+        <div class="fin-head">竞争格局 / 定价权</div>
+
+        <div class="fin-label">车规级（AEC-Q200）</div>
+        <div class="fin-num">~25–30%</div>
+        <div class="fin-num">~$1.6–1.9B</div>
+        <div class="fin-label">4–5 家松寡头；村田 40–50%，TDK+SEMCO&gt;30%</div>
+
+        <div class="fin-label">AI 服务器/计算</div>
+        <div class="fin-num">~18–22%</div>
+        <div class="fin-num">~$1.1–1.3B</div>
+        <div class="fin-label">双寡头 ~84%（村田 45%+SEMCO 39%）；仅村田能量产旗舰规格</div>
+
+        <div class="fin-label">RF/微波 + 高可靠工业/医疗</div>
+        <div class="fin-num">~10–12%</div>
+        <div class="fin-num">~$0.6–0.8B</div>
+        <div class="fin-label">村田近乎独占</div>
+
+        <div class="fin-label" style="font-weight:600; color: var(--ink);">= 溢价高端小计</div>
+        <div class="fin-num hi">~55–65%</div>
+        <div class="fin-num hi">~$3.4–4.0B</div>
+        <div class="fin-label" style="color: var(--ink);">4 月 15–35% 提价只覆盖这一层</div>
+
+        <div class="fin-label">标准手机/消费</div>
+        <div class="fin-num">~35–45%</div>
+        <div class="fin-num">~$2.2–2.8B</div>
+        <div class="fin-label">村田/SEMCO/中国厂，不在提价范围</div>
+      </div>
+      <div class="mlcc-note">
+        与 DRAM 不同：MLCC 高端与商品件由不同厂商生产。商品件普涨红利归风华/华新科/Yageo，村田不吃——其弹性是纯高端 alpha，不是行业 beta。
+      </div>
+    </div>
+  </section>
+
+  <!-- § 03 财务概览 -->
+  <section>
+    <div class="section-num">§ 03</div>
+    <h2 class="section-title">
+      <span class="cn">财务概览</span>
+      <span class="en">Financials · FY = Apr–Mar · P&amp;L @¥150.78 / BS @¥159.93</span>
+    </h2>
+
+    <div class="fin-grid grid-6">
+      <div class="fin-head">科目</div>
+      <div class="fin-head">FY2025 全年</div>
+      <div class="fin-head">YoY</div>
+      <div class="fin-head">Q4 FY25（最新）</div>
+      <div class="fin-head">YoY*</div>
+      <div class="fin-head">QoQ</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">利润表</div>
+
+      <div class="fin-label">营收</div>
+      <div class="fin-num hi">$12.14B</div>
+      <div class="fin-num good">+5.0%</div>
+      <div class="fin-num hi">$3.05B</div>
+      <div class="fin-num good">+11.8%</div>
+      <div class="fin-num bad">−1.5%</div>
+
+      <div class="fin-label">毛利率</div>
+      <div class="fin-num">42.3%</div>
+      <div class="fin-num good">+1.1pp</div>
+      <div class="fin-num">n/a（季度未披露）</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">营业利润率</div>
+      <div class="fin-num">15.4%</div>
+      <div class="fin-num bad">−0.6pp</div>
+      <div class="fin-num">17.1%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">见注**</div>
+
+      <div class="fin-label">EBITDA</div>
+      <div class="fin-num">$3.05B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">$0.82B（估）</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-label">净利润率</div>
+      <div class="fin-num">12.8%</div>
+      <div class="fin-num bad">−0.6pp</div>
+      <div class="fin-num">16.6%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">资产负债表（期末）</div>
+
+      <div class="fin-label">应收账款</div>
+      <div class="fin-num">$2.05B</div>
+      <div class="fin-num good">+11.5%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+      <div class="fin-num"></div>
+
+      <div class="fin-label">固定资产 PP&amp;E</div>
+      <div class="fin-num">$8.13B</div>
+      <div class="fin-num good">+9.9%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+      <div class="fin-num"></div>
+
+      <div class="fin-label">有息债务</div>
+      <div class="fin-num" style="grid-column: 2/5;">$0.02B（纯借款）；含租赁 $0.35B，净现金 ~$4.0B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+
+      <div class="fin-label">负债率（总负债/总资产）</div>
+      <div class="fin-num">15.0%</div>
+      <div class="fin-num bad">+0.2pp</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+      <div class="fin-num"></div>
+
+      <div class="fin-subhead" style="grid-column: 1/-1;">现金流量表</div>
+
+      <div class="fin-label">经营现金流</div>
+      <div class="fin-num">$2.82B</div>
+      <div class="fin-num bad">−5.9%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+      <div class="fin-num"></div>
+
+      <div class="fin-label">资本开支 Capex</div>
+      <div class="fin-num">$1.64B</div>
+      <div class="fin-num bad">+37.3%</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+      <div class="fin-num"></div>
+
+      <div class="fin-label">自由现金流</div>
+      <div class="fin-num">$1.18B</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num">—</div>
+      <div class="fin-num"></div>
+      <div class="fin-num"></div>
+    </div>
+
+    <div class="tbl-note">
+      * Q4 YoY 基数为 Q4 FY24 官方季度表（硬数据）：营收 ¥411,863M、营业利润 ¥45,541M、净利 ¥32,496M。<br>
+      ** Q4 营业利润 $0.52B 对 Q3 报告值 $0.25B 是 +108%，但 Q3 被 ¥438 亿减值压低；Q3 剔除后 $0.58B，Q4 实为环比约 −10%（手机淡季）。
+    </div>
+  </section>
+
+  <!-- § 04 核心业务指标 -->
+  <section>
+    <div class="section-num">§ 04</div>
+    <h2 class="section-title">
+      <span class="cn">核心业务指标</span>
+      <span class="en">KPIs · Past 4 Quarters · Hard Data</span>
+    </h2>
+
+    <div class="fin-grid grid-5">
+      <div class="fin-head">指标</div>
+      <div class="fin-head">Q1 FY25</div>
+      <div class="fin-head">Q2 FY25</div>
+      <div class="fin-head">Q3 FY25</div>
+      <div class="fin-head">Q4 FY25</div>
+
+      <div class="fin-label">MLCC（电容器）收入</div>
+      <div class="fin-num">¥217.3B</div>
+      <div class="fin-num">¥237.6B</div>
+      <div class="fin-num">¥239.1B</div>
+      <div class="fin-num hi">¥242.4B</div>
+
+      <div class="fin-label">电脑/服务器类目收入</div>
+      <div class="fin-num">¥70.0B</div>
+      <div class="fin-num">¥75.9B</div>
+      <div class="fin-num">¥77.3B</div>
+      <div class="fin-num hi">¥87.2B</div>
+
+      <div class="fin-label">电脑类目 YoY</div>
+      <div class="fin-num good">+22.4%</div>
+      <div class="fin-num good">+18.0%</div>
+      <div class="fin-num good">+26.5%</div>
+      <div class="fin-num hi">+47.7%</div>
+
+      <div class="fin-label">营业利润率</div>
+      <div class="fin-num">14.8%</div>
+      <div class="fin-num good">21.3%</div>
+      <div class="fin-num bad">8.1%（减值）</div>
+      <div class="fin-num good">17.1%</div>
+
+      <div class="fin-label">Book-to-bill</div>
+      <div class="fin-num">1.04</div>
+      <div class="fin-num">1.00</div>
+      <div class="fin-num">~1.1（估）</div>
+      <div class="fin-num hi">1.24</div>
+    </div>
+  </section>
+
+  <!-- § 05 核心关注点 -->
+  <section>
+    <div class="section-num">§ 05</div>
+    <h2 class="section-title">
+      <span class="cn">核心关注点</span>
+      <span class="en">Key Watch Points</span>
+    </h2>
+
+    <div class="points">
+      <div class="point">
+        <div></div>
+        <div>
+          <div class="point-title">4 月提价的毛利率兑现</div>
+          <div class="point-body">提价只覆盖溢价高端（~60% MLCC ≈ 公司营收 ~30%），公司层面弹性被稀释。<strong>FY2027 Q1（2026/7 底）元件毛利率是否较 FY2025 的 26.8% 营业利润率进一步上行</strong>，是支撑当前估值的唯一物理证据。量增而 margin 不起即破坏 thesis。</div>
+        </div>
+      </div>
+      <div class="point">
+        <div></div>
+        <div>
+          <div class="point-title">AI 双寡头是否被打破 + SEMCO 的 Si-Cap 风险</div>
+          <div class="point-body">村田 45%+SEMCO 39%=84%，仅村田能量产旗舰规格。<strong>SEMCO 押 silicon capacitor（Si-Cap）+FC-BGA 整合的差异化路线</strong>，是唯一可能架构级 leapfrog 村田 AI MLCC 垄断的变量。盯 Si-Cap 在 GPU 旁路电容渗透、SEMCO 旗舰规格量产进度。</div>
+        </div>
+      </div>
+      <div class="point">
+        <div></div>
+        <div>
+          <div class="point-title">产能扩张 vs AI 需求缺口</div>
+          <div class="point-body">村田自估两年按负载产能仅扩 ~20%，落后 AI 需求；<strong>电容器 backlog +89.5%、book-to-bill 1.24、交期 24 周</strong>是供给紧张实时表。book-to-bill 跌破 1 或 backlog 增速转负，即周期见顶早警。</div>
+        </div>
+      </div>
+      <div class="point">
+        <div></div>
+        <div>
+          <div class="point-title">SAW/手机模组持续失血</div>
+          <div class="point-body">D&amp;M 分部 FY2025 倒亏 −$176M（−4.0%），¥438 亿减值后手机高频若续恶化可能再减值。<strong>逐季盯 D&amp;M 营收与分部营业利润是否转正。</strong></div>
+        </div>
+      </div>
+      <div class="point">
+        <div></div>
+        <div>
+          <div class="point-title">估值突破历史上沿 + 不吃商品件普涨</div>
+          <div class="point-body">forward PE ~76x 已显著突破 2010 年以来历史区间上沿（10–49.5x），且 6 月这波拉升纯靠券商上调目标价、股价已跑在平均目标价之上。叠加<strong>村田弹性是纯高端 alpha、商品件普涨归风华/华新科</strong>，任何不及预期季度都易杀估值。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-nav">
+      <span>MURATA <span class="dot"></span> CARD 04 <span class="dot"></span> AI SUPPLY CHAIN · SERIES 02</span>
+      <span>
+        <a href="samsung.html">← Samsung</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="../index.html">Index</a>
+        &nbsp;&nbsp;&nbsp;
+        NEXT: <a href="samsung-emc.html">Samsung Electro-Mechanics →</a>
+      </span>
+    </div>
+    <div class="footer-source">
+      数据来源：村田 FY2025 決算短信（2026/4/30）、IR 披露、TrendForce/Morgan Stanley 份额数据、Google Finance/Investing.com 市值（2026/6/22） · 数据日期：2026/6 · Orthogonal Labs 不构成投资建议
+    </div>
+  </footer>
+
+</article>
+
+<script>
+fetch('../data.json')
+  .then(r => r.json())
+  .then(data => {
+    const d = data.card_data['murata'];
+    document.getElementById('head-meta').innerHTML =
+      `数据截止 <strong>${d.data_as_of}</strong><br>` +
+      `市值 <strong>${d.market_cap}</strong><br>` +
+      `PE TTM <strong>${d.pe_ttm}</strong> &nbsp; PE Fwd <strong>${d.pe_fwd}</strong><br>` +
+      `作者 <strong>Danny</strong> · Orthogonal Labs`;
+  })
+  .catch(() => {});
+</script>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-06-17",
+    "updated": "2026-06-22",
     "author": "Danny",
     "series": "02",
     "series_title": "AI Supply Chain"
@@ -154,6 +154,31 @@
           "card_number": null
         }
       ]
+    },
+    {
+      "id": "07",
+      "slug": "mlcc",
+      "title_en": "MLCC",
+      "title_zh": "AI 加速器电容",
+      "tagline": "被动元件最受益 AI 的环节 · 村田高端垄断 · 与 SEMCO 双寡头 · 与内存不同，高端不吃商品件普涨",
+      "companies": [
+        {
+          "name": "Murata",
+          "ticker": "6981",
+          "exchange": "TSE",
+          "status": "done",
+          "card_path": "cards/murata.html",
+          "card_number": "04"
+        },
+        {
+          "name": "Samsung Electro-Mechanics",
+          "ticker": "009150",
+          "exchange": "KOSPI",
+          "status": "done",
+          "card_path": "cards/samsung-emc.html",
+          "card_number": "05"
+        }
+      ]
     }
   ],
   "card_data": {
@@ -173,6 +198,18 @@
       "market_cap": "~$380B(集团口径)",
       "pe_ttm": "~16x(集团口径)",
       "pe_fwd": "~12x(集团口径)",
+      "data_as_of": "2026-06-17"
+    },
+    "murata": {
+      "market_cap": "~$139B",
+      "pe_ttm": "~96x",
+      "pe_fwd": "~76x",
+      "data_as_of": "2026-06-22"
+    },
+    "samsung-emc": {
+      "market_cap": "~$100B",
+      "pe_ttm": "~187x",
+      "pe_fwd": "~121x",
       "data_as_of": "2026-06-17"
     }
   }
