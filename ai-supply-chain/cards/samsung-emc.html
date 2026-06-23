@@ -301,18 +301,15 @@ section:last-child { border-bottom: none; }
 }
 
 .point {
-  display: grid;
-  grid-template-columns: 56px 1fr;
+  display: flex;
   gap: 20px;
   padding: 20px 0;
   border-top: 1px solid var(--rule);
-  counter-increment: pt;
 }
 
 .point:first-child { border-top: none; padding-top: 0; }
 
-.point::before {
-  content: counter(pt, decimal-leading-zero);
+.point-num {
   font-family: 'Fraunces', serif;
   font-weight: 900;
   font-size: 36px;
@@ -320,6 +317,7 @@ section:last-child { border-bottom: none; }
   color: var(--accent);
   font-variation-settings: "opsz" 144;
   font-style: italic;
+  flex: 0 0 56px;
 }
 
 .point-title {
@@ -410,8 +408,8 @@ section:last-child { border-bottom: none; }
   .grid-5 > div:nth-child(3n) { border-right: none; }
   .grid-5 > div:nth-last-child(-n+5) { border-bottom: 1px solid var(--rule); }
   .grid-5 > div:nth-last-child(-n+3) { border-bottom: none; }
-  .point { grid-template-columns: 40px 1fr; gap: 14px; }
-  .point::before { font-size: 28px; }
+  .point { gap: 14px; }  .point-num { flex: 0 0 40px; font-size: 28px; }
+
   .footer-nav { flex-direction: column; gap: 6px; align-items: flex-start; }
 }
 </style>
@@ -636,30 +634,35 @@ section:last-child { border-bottom: none; }
 
     <div class="points">
       <div class="point">
+        <div class="point-num">01</div>
         <div>
           <div class="point-title">估值抛物线 + 倒挂村田</div>
           <div class="point-body">TTM PE ~187x（村田 ~96x）、forward ~121x，股价 52 周 +16 倍。SEMCO 毛利 20%（村田 42%）、背 captive 摄像头，却交易在村田约两倍 PE——<strong>纯情绪/补涨驱动，是 5 条里最硬的下行风险。</strong>AI 主题降温或不及预期季度都易剧烈杀估值。</div>
         </div>
       </div>
       <div class="point">
+        <div class="point-num">02</div>
         <div>
           <div class="point-title">中国依赖（~40% 收入）</div>
           <div class="point-body">中国手机品牌用本土 MLCC 厂（风华/三环）压价，侵蚀标准件定价权；天津产能地缘/关税敞口。<strong>盯中国手机/EV 需求与本土厂份额。</strong></div>
         </div>
       </div>
       <div class="point">
+        <div class="point-num">03</div>
         <div>
           <div class="point-title">AI MLCC 认证黏性抢份额</div>
           <div class="point-body">bull thesis 验证点：村田旗舰供不上→客户认证 SEMCO 为第二源→认证黏住。<strong>盯 AI 服务器 MLCC 份额能否从 39% 向村田 45% 收窄</strong>（旗舰层仍归村田）。</div>
         </div>
       </div>
       <div class="point">
+        <div class="point-num">04</div>
         <div>
           <div class="point-title">FC-BGA 第二 AI 腿 + 自由现金流转负</div>
           <div class="point-body">村田没有的差异化看点，2026 H2 冲满产、绑 big-tech。但<strong>2026 capex 翻倍、FCF 大概率转负、在加杠杆</strong>；FC-BGA 历史有过剩/亏损史，玻璃基板新投入回报未明。盯 Package 利润率与 FCF。</div>
         </div>
       </div>
       <div class="point">
+        <div class="point-num">05</div>
         <div>
           <div class="point-title">三星 captive 双刃 + 治理</div>
           <div class="point-body">三星电子既是 ~23.7% 大股东又是最大客户；摄像头模组受 Galaxy 销量/三星内制决策牵制、转移定价压低毛利。<strong>chaebol 关联交易结构下少数股东利益非优先。</strong>盯三星 Galaxy 销量与内制动向。</div>
